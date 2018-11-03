@@ -3,14 +3,22 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ReservationCreateComponent } from './reservation-create/reservation-create.component';
+import { ReservationDeleteComponent } from './reservation-delete/reservation-delete.component';
+import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
+import { ReservationMenuComponent } from './reservation-menu/reservation-menu';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ReservationCreateComponent,
+    ReservationDeleteComponent,
+    ReservationDetailsComponent,
+    ReservationMenuComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
