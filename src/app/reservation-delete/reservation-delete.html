@@ -1,1 +1,24 @@
-<h1>Delete Reservation Page</h1>
+<h1>Delete Reservation Page</h1> 
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pulvinar pulvinar lectus, id ultricies dui tincidunt in. Quisque id metus nibh. Praesent consequat, enim quis facilisis pretium, tortor ligula bibendum nisl, et laoreet sem dolor id sem. Aenean sagittis consequat mattis. Phasellus metus lectus, tincidunt at rhoncus vitae, consequat et nisl.</p>
+            <img src="http://placehold.it/350x350"/>
+        </div>
+        <div class="col-6">
+            <label>Vorname
+                <input #firstName />
+            </label>
+            <label>Nachname
+                <input #familyName />
+            </label>
+            <label>Reservierungsnummer
+                <input #reservationNumber />
+            </label>
+            <button (click)="cancelReservation(firstName.value, familyName.value, reservationNumber.value)">
+                Ok
+            </button>
+        </div>
+    </div>
+</div>

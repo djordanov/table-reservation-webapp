@@ -15,4 +15,8 @@ export class ReservationService {
     const reservation = RESERVATIONS.find(r => r.id === id);
     return of(reservation);
   }
+
+  delete(id: String): Observable<void> {
+    return of(alert('Reservation Deletion not implemented yet'));
+  }
 }
