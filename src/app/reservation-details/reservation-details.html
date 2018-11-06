@@ -10,14 +10,15 @@
             <label>Reservierungsnummer
                 <input #reservationNumber />
             </label>
-            <!-- (click) passes input value to getReservation() and then clears the input -->
             <button (click)="getReservation(reservationNumber.value)">
-            Ok
+                Ok
             </button>
-            <!--  -->
             <div *ngIf="reservation">
-                <p>{{reservation.date}}</p>
-                <p>{{reservation.numberOfPersons}}</p>
+                <p>Name: {{reservation.customer.name}}</p>
+                <p>Personen: {{reservation.numberOfPersons}}</p>
+                <p>Datum: {{reservation.date | date: 'dd, MMMM'}}</p>
+                <p>Zeit: {{reservation.date | date: 'HH:mm'}}</p>
+                <p>Tisch: {{reservation.table.id}}</p>
             </div>
         </div>
     </div>

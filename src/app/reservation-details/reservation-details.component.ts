@@ -14,7 +14,6 @@ export class ReservationDetailsComponent {
   constructor(private reservationService: ReservationService) {}
 
   getReservation(id: String): void {
-    alert('reservation id: ' + id);
     this.reservationService.getReservation(id)
       .subscribe(reservation => this.reservation = reservation);
   }
