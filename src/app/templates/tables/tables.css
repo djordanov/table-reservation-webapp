@@ -14,7 +14,3 @@
     width: 20%;
 }
 
-.table-hover-cells > tbody > tr > th:hover,
-.table-hover-cells > tbody > tr > td:hover {
-  background-color: #f5f5f5;
-}

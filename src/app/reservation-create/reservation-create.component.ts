@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { TableReservationStatus } from '../data-models/TableReservationStatus';
 import { TableTypes } from '../data-models/TableTypes';
+import { ReservationService } from '../services/reservation.service';
+import { CreateReservation } from '../data-models/Reservation';
 
 @Component({
   selector: 'app-reservation-create',
@@ -8,6 +10,11 @@ import { TableTypes } from '../data-models/TableTypes';
   styleUrls: ['./reservation-create.css']
 })
 export class ReservationCreateComponent {
+  reservation: CreateReservation = {
+    tableID: '', firstname: '', lastname: '', telnr: '',
+    email: '', numberOfPersons: undefined, date: undefined, duration: undefined,
+  };
+
   tableData: TableReservationStatus[] = [
     {
       id: '1',
@@ -53,9 +60,13 @@ export class ReservationCreateComponent {
     }
   ];
 
-  constructor() {}
+  constructor(private reservationService: ReservationService) {}
 
   onTableClicked(tableID: string) {
-    console.log(tableID);
+    this.reservation.tableID = tableID;
+  }
+
+  createReservation() {
+    this.reservationService.createReservation(this.reservation);
   }
 }

@@ -13,6 +13,7 @@ import { ReservationDeleteComponent } from './reservation-delete/reservation-del
 import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
 import { ReservationMenuComponent } from './reservation-menu/reservation-menu';
 import { TablesComponent } from './templates/tables/tables.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { TablesComponent } from './templates/tables/tables.component';
     AppRoutingModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
-    BootstrapModalModule
+    BootstrapModalModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

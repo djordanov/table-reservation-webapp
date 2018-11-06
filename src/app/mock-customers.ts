@@ -1,4 +1,4 @@
-import { Customer } from './Customer';
+import { Customer } from './data-models/Customer';
 
 export const CUSTOMERS: Customer[] = [
   { id: '1', name: 'customerName1' },
