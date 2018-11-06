@@ -1,1 +1,37 @@
 <h1>Create Reservation Page</h1>
+
+<div class="row">
+    <div class="col-md-7">
+        <app-tables [tableData]="tableData" (tableClicked)="onTableClicked($event)"></app-tables>
+    </div>
+    <div class="col-md-4"> 
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pulvinar pulvinar lectus, id ultricies dui tincidunt in. Quisque id metus nibh. Praesent consequat, enim quis facilisis pretium, tortor ligula bibendum nisl, et laoreet sem dolor id sem. Aenean sagittis consequat mattis. Phasellus metus lectus, tincidunt at rhoncus vitae, consequat et nisl.</p>
+        <p> Wählen Sie auf der linken Seite einen Tisch aus oder tragen Sie unten die Tischnummer ein.</p>
+        <div class="form-group row justify-content-between">
+            <input type="text" class="col-md-6  form-control" id="firstname" placeholder="Vorname">
+            <input type="text" class="col-md-6  form-control" id="lastname" placeholder="Nachname">
+        </div>
+        <div class="form-group row">
+            <input type="tel" class="col-md-12 form-control ml-" id="telephone" placeholder="Telefonnummer">
+        </div>
+        <div class="form-group row">
+            <input type="email" class="col-md-12 form-control ml-" id="email" placeholder="E-Mail">
+        </div>
+        <div class="form-group row">
+            <select class="form-control col-md-2" id="sel1">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+            <label for="sel1" class="ml-2">Personen</label>
+        </div>
+        <div class="form-group row">
+            <input type="date" class="col-md-6 form-control ml-" id="date">
+        </div>
+        <div class="form-group row">
+            <input type="time" class="col-md-6 form-control ml-" id="time-from" placeholder="von">
+            <label for="sel1" class="ml-2">Uhrzeit</label>
+        </div>
+    </div>
+</div>

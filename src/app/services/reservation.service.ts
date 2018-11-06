@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { Reservation } from './Reservation';
-import { RESERVATIONS } from './mock-reservations';
+import { Reservation } from '../data-models/Reservation';
+import { RESERVATIONS } from '../mock-reservations';
 
 @Injectable({
   providedIn: 'root'
