@@ -32,12 +32,14 @@ export class ReservationDeleteComponent {
       .showClose(true)
       .title('Stornierung Bestätigen')
       .body(`
-          <h3>Sind Sie sicher, dass Sie folgende Reservierung stornieren wollen?</h3>
-          <p>Name: ${reservation.customer.name}</p>
-          <p>Personen: ${reservation.numberOfPersons}</p>
-          <p>Tisch: ${reservation.table.id}</p>
-          <p>Datum: ${reservation.date.toLocaleDateString('de-DE')}</p>
-          <p>Zeit: ${reservation.date.getHours() + ':' + reservation.date.getMinutes()}</p>
+          <h2>Sind Sie sicher, dass Sie folgende Reservierung stornieren wollen?</h2>
+          <div class="container float-right mt-5 ml-4">
+            <p>Name: ${reservation.customer.name}</p>
+            <p>Personen: ${reservation.numberOfPersons}</p>
+            <p>Tisch: ${reservation.table.id}</p>
+            <p>Datum: ${reservation.date.toLocaleDateString('de-DE')}</p>
+            <p>Zeit: ${reservation.date.getHours() + ':' + reservation.date.getMinutes()}</p>
+          </div>
           `)
       .open();
 
