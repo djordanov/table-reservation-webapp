@@ -1,0 +1,16 @@
+#table {
+    background-image: url("../../../assets/images/Hintergrund-updated1.png");
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-right: 30px;
+}
+
+.borderless td, .borderless th {
+    border: none;
+}
+
+.column-1, .column-2, .column-3, .column-4 {
+    width: 20%;
+}
+

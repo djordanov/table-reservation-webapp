@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 
-import { Reservation } from '../Reservation';
-import { ReservationService } from '../reservation.service';
+import { Reservation } from '../data-models/Reservation';
+import { ReservationService } from '../services/reservation.service';
 
 @Component({
   selector: 'app-reservation-details',

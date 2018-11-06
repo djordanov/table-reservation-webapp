@@ -1,4 +1,4 @@
-import { Reservation } from './Reservation';
+import { Reservation } from './data-models/Reservation';
 import { TABLES } from './mock-tables';
 import { CUSTOMERS } from './mock-customers';
 

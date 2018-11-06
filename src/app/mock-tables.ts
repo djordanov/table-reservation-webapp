@@ -1,4 +1,4 @@
-import { Table } from './Table';
+import { Table } from './data-models/Table';
 
 export const TABLES: Table[] = [
   { id: '1' },

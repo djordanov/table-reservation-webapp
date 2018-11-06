@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 
 import { Overlay } from 'ngx-modialog';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
-
-import { ReservationService } from '../reservation.service';
-import { Reservation } from '../Reservation';
+import { ReservationService } from '../services/reservation.service';
+import { Reservation } from '../data-models/Reservation';
 
 @Component({
   selector: 'app-reservation-delete',
