@@ -28,8 +28,6 @@ export class ReservationDeleteComponent {
   openConfirm(reservation: Reservation) {
     const dialogRef = this.modal.confirm()
       .size('lg')
-      .showClose(true)
-      .title('Stornierung Bestätigen')
       .body(`
           <h2>Sind Sie sicher, dass Sie folgende Reservierung stornieren wollen?</h2>
           <div class="container float-right mt-5 ml-4">
