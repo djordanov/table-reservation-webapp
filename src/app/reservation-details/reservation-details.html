@@ -12,11 +12,11 @@
                 Ok
             </button>
             <div class="mt-5 py-5 px-2 float-left" *ngIf="reservation">
-                <p>Name: {{reservation.customer.name}}</p>
-                <p>Personen: {{reservation.numberOfPersons}}</p>
-                <p>Datum: {{reservation.date | date: 'dd, MMMM'}}</p>
-                <p>Zeit: {{reservation.date | date: 'HH:mm'}}</p>
-                <p>Tisch: {{reservation.table.id}}</p>
+                <p>Name: {{reservation.person.name}}</p>
+                <p>Personen: {{reservation.number_of_person}}</p>
+                <p>Datum: {{reservation.res_day | date: 'dd, MMMM'}}</p>
+                <p>Zeit: {{reservation.res_day | date: 'HH:mm'}}</p>
+                <p>Tisch: {{reservation.table.table_id}}</p>
             </div>
         </div>
     </div>

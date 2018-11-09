@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-import { Overlay } from 'ngx-modialog';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { ReservationService } from '../services/reservation.service';
 import { Reservation } from '../data-models/Reservation';
@@ -31,17 +30,17 @@ export class ReservationDeleteComponent {
       .body(`
           <h2>Sind Sie sicher, dass Sie folgende Reservierung stornieren wollen?</h2>
           <div class="container float-right mt-5 ml-4">
-            <p>Name: ${reservation.customer.name}</p>
-            <p>Personen: ${reservation.numberOfPersons}</p>
-            <p>Tisch: ${reservation.table.id}</p>
-            <p>Datum: ${reservation.date.toLocaleDateString('de-DE')}</p>
-            <p>Zeit: ${reservation.date.getHours() + ':' + reservation.date.getMinutes()}</p>
+            <p>Name: ${reservation.person.name}</p>
+            <p>Personen: ${reservation.number_of_person}</p>
+            <p>Tisch: ${reservation.table.table_id}</p>
+            <p>Datum: ${reservation.res_day.toLocaleDateString('de-DE')}</p>
+            <p>Zeit: ${reservation.res_day.getHours() + ':' + reservation.res_day.getMinutes()}</p>
           </div>
           `)
       .open();
 
     dialogRef.result
-      .then( result => this.deleteReservation(reservation.id) );
+      .then( result => this.deleteReservation(reservation.reservation_id) );
   }
 
   deleteReservation(reservationID: String): void {
