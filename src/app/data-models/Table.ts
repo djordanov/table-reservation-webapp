@@ -1,3 +1,7 @@
 export class Table {
-    id: String;
+    'table_id': String;
+    'rest_id': String;
+    'row': number;
+    'col': number;
+    'nuberofseats': number;
 }

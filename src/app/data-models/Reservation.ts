@@ -1,13 +1,14 @@
 import { Table } from './Table';
-import { Time } from '@angular/common';
-import { Customer } from './Customer';
+import { Person } from './Person';
 
 export class Reservation {
-    id: String;
+    reservation_id: String;
     table: Table;
-    customer: Customer;
-    date: Date;
-    numberOfPersons: number;
+    person: Person;
+    created_at: Date;
+    res_day: Date;
+    timeduration_min: number;
+    number_of_person: number;
 }
 
 export class CreateReservation {
