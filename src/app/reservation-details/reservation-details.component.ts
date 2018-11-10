@@ -16,13 +16,7 @@ export class ReservationDetailsComponent {
   getReservation(id: String): void {
     this.reservationService.getReservation(id)
       .subscribe(response => {
-        this.parseReservationResponse(response);
+        this.reservation = this.reservationService.parseReservationResponse(response);
       });
-  }
-
-  parseReservationResponse(reservationResponse: any): void {
-    this.reservation = reservationResponse.info_res;
-    this.reservation.table = reservationResponse.info_table;
-    this.reservation.person = reservationResponse.info_person;
   }
 }

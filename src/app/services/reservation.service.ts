@@ -15,19 +15,30 @@ export class ReservationService {
   urlBase = 'http://lustigtest.de/php';
 
   getReservation(id: String): Observable<any> {
-    return this.http.get<any>(this.urlBase +
-      '/reservierung_einsehen.php?reser_id=' + id)
+    const url = this.urlBase + '/reservierung_einsehen.php?reser_id=' + id;
+    return this.http.get<any>(url)
       .pipe(
         catchError(this.handleError<any>(`getReservation id=${id}`))
       );
   }
 
-  delete(id: String): Observable<void> {
-    return of(alert('Reservation Deletion not implemented yet'));
+  delete(id: String): Observable<any> {
+    const url = this.urlBase + '/reservierung_loeschen.php?reser_id=' + id;
+    return this.http.get<any>(url)
+    .pipe(
+      catchError(this.handleError<any>(`delete id=${id}`))
+    );
   }
 
   createReservation(payload: CreateReservation): Observable<void> {
     return of(alert('Reservation Create not implemented yet \n\n payload: ' + payload));
+  }
+
+  parseReservationResponse(reservationResponse: any): Reservation {
+    const reservation = reservationResponse.info_res;
+    reservation.table = reservationResponse.info_table;
+    reservation.person = reservationResponse.info_person;
+    return reservation;
   }
 
   /**
