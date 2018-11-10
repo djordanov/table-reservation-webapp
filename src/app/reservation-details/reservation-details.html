@@ -14,8 +14,8 @@
             <div class="mt-5 py-5 px-2 float-left" *ngIf="reservation">
                 <p>Name: {{reservation.person.name}}</p>
                 <p>Personen: {{reservation.number_of_person}}</p>
-                <p>Datum: {{reservation.res_day | date: 'dd, MMMM'}}</p>
-                <p>Zeit: {{reservation.res_time | date: 'HH:mm'}}</p>
+                <p>Datum: {{reservation.res_day}}</p>
+                <p>Zeit: {{reservation.res_time}}</p>
                 <p>Minuten: {{reservation.timeduration_min}}</p>
                 <p>Tisch: {{reservation.table.table_id}}</p>
             </div>

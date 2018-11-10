@@ -25,7 +25,7 @@ export class ReservationService {
   delete(id: String): Observable<any> {
     const url = this.urlBase + '/reservierung_loeschen.php?reser_id=' + id;
     return this.http.get<any>(url)
-    .pipe(
+    .pipe(  // TODO this throws an error for some reason, but it works for now
       catchError(this.handleError<any>(`delete id=${id}`))
     );
   }
@@ -35,6 +35,11 @@ export class ReservationService {
   }
 
   parseReservationResponse(reservationResponse: any): Reservation {
+    if (reservationResponse.result === 'error') {
+      alert('Coudn\t access reservation for some reason'); // TODO better error message
+      return;
+    }
+
     const reservation = reservationResponse.info_res;
     reservation.table = reservationResponse.info_table;
     reservation.person = reservationResponse.info_person;

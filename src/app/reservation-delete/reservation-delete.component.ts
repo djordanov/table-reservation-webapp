@@ -48,9 +48,14 @@ export class ReservationDeleteComponent {
   deleteReservation(reservationID: String): void {
     this.reservationService.getReservation(reservationID)
       .subscribe(reservationResponse => {
+        if (!reservationResponse) { // specified reservation is missing
+          return;
+        }
+
         const reservation_id = reservationResponse.info_res.reservation_id; // TODO add error handling
         this.reservationService.delete(reservation_id)
           .subscribe(deleteResponse => {  // TODO [minor] this is pretty bad
+            console.log(deleteResponse);  // TODO remove
             if (deleteResponse.result) {
               alert('Reservation storniert!');
             } else {
