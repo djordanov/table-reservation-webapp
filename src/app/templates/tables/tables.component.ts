@@ -10,7 +10,7 @@ import { TableTypes } from 'src/app/data-models/TableTypes';
 export class TablesComponent implements OnInit {
     @Input() isClickable: boolean;
     @Input() tableData: TableReservationStatus[];
-    @Output() tableClicked = new EventEmitter<string>();
+    @Output() tableClicked = new EventEmitter<number>();
 
     columns = [1, 2, 3, 4, 5];
 
@@ -54,37 +54,50 @@ export class TablesComponent implements OnInit {
 
     onTableClick = (element: MouseEvent) => {
         const srcElement = element.srcElement;
+        const clickedReservations = document.getElementsByClassName('clicked');
         const img = new Image();
 
-        // reset old Img
-        const clickedReservations = document.getElementsByClassName('clicked');
-        if (clickedReservations.length !== 0) {
-            const currentClicked = clickedReservations[0];
-            const oldImg = new Image();
-            oldImg.setAttribute('id', currentClicked.id);
-            if (currentClicked.className.includes('table-1')) {
-                oldImg.src = '../../../assets/images/Tisch1_weiß.png';
-                oldImg.setAttribute('class', 'img-fluid table-1');
+        if (clickedReservations.length !== 0 && clickedReservations[0].id === srcElement.id) {
+            // set new reserved Img
+            img.setAttribute('id', srcElement.id);
+            if (element.srcElement.className.includes('table-1')) {
+                img.setAttribute('class', 'img-fluid table-1');
+                img.src = '../../../assets/images/Tisch1_weiß.png';
             } else {
-                oldImg.src = '../../../assets/images/Tisch2_weiß.png';
-                oldImg.setAttribute('class', 'img-fluid table-2');
+                img.setAttribute('class', 'img-fluid table-2');
+                img.src = '../../../assets/images/Tisch2_weiß.png';
             }
-            currentClicked.parentNode.append(oldImg);
-            currentClicked.parentNode.removeChild(currentClicked);
-        }
-
-        // set new reserved Img
-        img.setAttribute('id', srcElement.id);
-        img.setAttribute('class', srcElement.className + ' clicked');
-        if (element.srcElement.className.includes('table-1')) {
-            img.src = '../../../assets/images/Tisch1_gruen.png';
+            srcElement.parentNode.append(img);
+            srcElement.parentNode.removeChild(srcElement);
         } else {
-            img.src = '../../../assets/images/Tisch2_gruen.png';
-        }
-        srcElement.parentNode.append(img);
-        srcElement.parentNode.removeChild(srcElement);
+            // reset old Img
+            if (clickedReservations.length !== 0) {
+                const currentClicked = clickedReservations[0];
+                const oldImg = new Image();
+                oldImg.setAttribute('id', currentClicked.id);
+                if (currentClicked.className.includes('table-1')) {
+                    oldImg.src = '../../../assets/images/Tisch1_weiß.png';
+                    oldImg.setAttribute('class', 'img-fluid table-1');
+                } else {
+                    oldImg.src = '../../../assets/images/Tisch2_weiß.png';
+                    oldImg.setAttribute('class', 'img-fluid table-2');
+                }
+                clickedReservations[0].parentNode.append(oldImg);
+                clickedReservations[0].parentNode.removeChild(clickedReservations[0]);
+            }
 
-        // emit tableID
-        this.tableClicked.emit(srcElement.id);
+            // set new reserved Img
+            img.setAttribute('id', srcElement.id);
+            img.setAttribute('class', srcElement.className + ' clicked');
+            if (element.srcElement.className.includes('table-1')) {
+                img.src = '../../../assets/images/Tisch1_gruen.png';
+            } else {
+                img.src = '../../../assets/images/Tisch2_gruen.png';
+            }
+            srcElement.parentNode.append(img);
+            srcElement.parentNode.removeChild(srcElement);
+    }
+    // emit tableID
+    this.tableClicked.emit(parseInt(srcElement.id, 10));
     }
 }

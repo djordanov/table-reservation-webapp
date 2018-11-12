@@ -11,8 +11,9 @@ import { CreateReservation } from '../data-models/Reservation';
 })
 export class ReservationCreateComponent {
   reservation: CreateReservation = {
-    tableID: '', firstname: '', lastname: '', telnr: '',
-    email: '', numberOfPersons: undefined, date: undefined, duration: undefined,
+    tableID: undefined, firstName: '', lastName: '', telephoneNumber: '',
+    email: '', numberOfPersons: undefined, date: undefined, time: undefined,
+    rest_id: 1,
   };
 
   tableData: TableReservationStatus[] = [
@@ -62,8 +63,12 @@ export class ReservationCreateComponent {
 
   constructor(private reservationService: ReservationService) {}
 
-  onTableClicked(tableID: string) {
-    this.reservation.tableID = tableID;
+  onTableClicked(tableID: number) {
+    if (this.reservation.tableID === tableID) {
+      this.reservation.tableID = undefined;
+    } else {
+      this.reservation.tableID = tableID;
+    }
   }
 
   createReservation() {

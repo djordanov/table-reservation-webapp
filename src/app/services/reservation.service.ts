@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Reservation, CreateReservation } from '../data-models/Reservation';
+import { Reservation, CreateReservation, TableReservedRequestPayload } from '../data-models/Reservation';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -20,6 +20,10 @@ export class ReservationService {
       .pipe(
         catchError(this.handleError<any>(`getReservation id=${id}`))
       );
+  }
+
+  getTablesByDateAndTime(payload: TableReservedRequestPayload) {
+    const url = this.urlBase + '/php/tische_datum_uhrzeit.php';
   }
 
   delete(id: String): Observable<any> {

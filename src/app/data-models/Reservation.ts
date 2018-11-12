@@ -13,12 +13,19 @@ export class Reservation {
 }
 
 export class CreateReservation {
-    tableID: String;
-    firstname: String;
-    lastname: String;
-    telnr: String;
+    rest_id: number;
+    tableID: number;
+    firstName: String;
+    lastName: String;
+    telephoneNumber: String;
     email: String;
     numberOfPersons: number;
     date: Date;
-    duration: number;
+    time: String;
+}
+
+export class TableReservedRequestPayload {
+    rest_id: number;
+    date: Date;
+    time: String;
 }
