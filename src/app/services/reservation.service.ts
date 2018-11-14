@@ -23,7 +23,7 @@ export class ReservationService {
   }
 
   getTables(): Observable<any> {
-    const url = this.urlBase + '/get_tables.php?res_id=1';
+    const url = baseURL + '/get_tables.php?res_id=1';
     const headers = new Headers({ 'Content - Type' : 'application/json' });
     const options = new RequestOptions({ headers : headers });
     return this.http.get(url)
@@ -33,7 +33,7 @@ export class ReservationService {
   }
 
   getTablesByDateAndTime(payload: TableReservedRequestPayload) {
-    const url = this.urlBase + '/php/tische_datum_uhrzeit.php';
+    const url = baseURL + '/php/tische_datum_uhrzeit.php';
   }
 
   delete(id: String): Observable<any> {
