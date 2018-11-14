@@ -16,6 +16,9 @@ import { ReservationMenuComponent } from './reservation-menu/reservation-menu';
 import { TablesComponent } from './templates/tables/tables.component';
 import { FormsModule } from '@angular/forms';
 
+import { StaffMenuComponent } from './staff/menu/staff-menu.component';
+import { StaffCurrentReservationsComponent } from './staff/current-reservations/current-reservations.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +27,8 @@ import { FormsModule } from '@angular/forms';
     ReservationDetailsComponent,
     ReservationMenuComponent,
     TablesComponent,
+    StaffMenuComponent,
+    StaffCurrentReservationsComponent
   ],
   imports: [
     BrowserModule,

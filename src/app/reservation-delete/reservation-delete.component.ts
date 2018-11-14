@@ -4,6 +4,8 @@ import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { ReservationService } from '../services/reservation.service';
 import { Reservation } from '../data-models/Reservation';
 
+import { parseReservationResponse } from '../Utils';
+
 @Component({
   selector: 'app-reservation-delete',
   templateUrl: './reservation-delete.html',
@@ -16,7 +18,7 @@ export class ReservationDeleteComponent {
     const name = firstName + ' ' + familyName;
     this.reservationService.getReservation(reservationNumber)
       .subscribe(reservationResponse => {
-        const reservation = this.reservationService.parseReservationResponse(reservationResponse);
+        const reservation = parseReservationResponse(reservationResponse);
         if (reservation.person.name === name) {
           this.openConfirm(reservation);
         } else {
