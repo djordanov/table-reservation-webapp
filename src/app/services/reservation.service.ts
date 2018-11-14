@@ -4,6 +4,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Reservation, CreateReservation, TableReservedRequestPayload } from '../data-models/Reservation';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { RequestOptions, Headers } from '@angular/http';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,16 @@ export class ReservationService {
     return this.http.get<any>(url)
       .pipe(
         catchError(this.handleError<any>(`getReservation id=${id}`))
+      );
+  }
+
+  getTables(): Observable<any> {
+    const url = this.urlBase + '/get_tables.php?res_id=1';
+    const headers = new Headers({ 'Content - Type' : 'application/json' });
+    const options = new RequestOptions({ headers : headers });
+    return this.http.get(url)
+      .pipe(
+        catchError(this.handleError<any>(`get_tables.php?res_id=1`, options))
       );
   }
 

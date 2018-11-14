@@ -10,6 +10,12 @@ import { CreateReservation } from '../data-models/Reservation';
   styleUrls: ['./reservation-create.css']
 })
 export class ReservationCreateComponent {
+
+  isDateAndTimeSet = false;
+  isDateOnEdit = false;
+
+  reservationTime: { date: Date, time: String } = { date: undefined, time: undefined };
+
   reservation: CreateReservation = {
     tableID: undefined, firstName: '', lastName: '', telephoneNumber: '',
     email: '', numberOfPersons: undefined, date: undefined, time: undefined,
@@ -61,7 +67,7 @@ export class ReservationCreateComponent {
     }
   ];
 
-  constructor(private reservationService: ReservationService) {}
+  constructor(private reservationService: ReservationService) {  }
 
   onTableClicked(tableID: number) {
     if (this.reservation.tableID === tableID) {
@@ -73,5 +79,27 @@ export class ReservationCreateComponent {
 
   createReservation() {
     this.reservationService.createReservation(this.reservation);
+  }
+
+  setDateAndTime() {
+    if (this.reservation.time && this.reservation.date) {
+      this.isDateAndTimeSet = true;
+    }
+  }
+
+  onDateEditClick() {
+    this.isDateOnEdit = true;
+  }
+
+  backButtonClicked() {
+    this.isDateOnEdit = false;
+  }
+
+  setNewDateAndTime() {
+    if (this.reservationTime.time && this.reservationTime.date) {
+      this.reservation.date = this.reservationTime.date;
+      this.reservation.time = this.reservationTime.time;
+      this.isDateOnEdit = false;
+    }
   }
 }
