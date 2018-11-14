@@ -84,6 +84,9 @@ export class ReservationCreateComponent {
   setDateAndTime() {
     if (this.reservation.time && this.reservation.date) {
       this.isDateAndTimeSet = true;
+      this.reservationTime.date = this.reservation.date;
+      this.reservationTime.time = this.reservation.time;
+
     }
   }
 
