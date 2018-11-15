@@ -8,6 +8,7 @@ import { AlertModule } from 'ngx-bootstrap';
 
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { ReservationCreateComponent } from './reservation-create/reservation-create.component';
 import { ReservationDeleteComponent } from './reservation-delete/reservation-delete.component';
@@ -37,9 +38,10 @@ import { StaffCurrentReservationsComponent } from './staff/current-reservations/
     ModalModule.forRoot(),
     BootstrapModalModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

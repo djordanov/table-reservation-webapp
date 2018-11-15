@@ -1,25 +1,40 @@
 <div class="container m-5 p-5">
-    <div class="row">
-        <div class="col-md-6">
-            <h1>Reservierung einsehen</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pulvinar pulvinar lectus, id ultricies dui tincidunt in. Quisque id metus nibh. Praesent consequat, enim quis facilisis pretium, tortor ligula bibendum nisl, et laoreet sem dolor id sem. Aenean sagittis consequat mattis. Phasellus metus lectus, tincidunt at rhoncus vitae, consequat et nisl.</p>
-            <img class="img-fluid center-block" 
-                alt="placeholder image" src="http://placehold.it/700x700"/>
-        </div>
-        <div class="col-md-6 p-5">
-            <input class="container-fluid" [value]="'Reservierungsnummer'" #reservationNumber />
-            <button class="btn btn-primary btn-mg col-md-2 mt-3 float-right" 
-                (click)="getReservation(reservationNumber.value)">
-                Ok
-            </button>
-            <div class="mt-5 py-5 px-2 float-left" *ngIf="reservation">
-                <p>Name: {{reservation.person.name}}</p>
-                <p>Personen: {{reservation.number_of_person}}</p>
-                <p>Datum: {{reservation.res_day}}</p>
-                <p>Zeit: {{reservation.res_time}}</p>
-                <p>Minuten: {{reservation.timeduration_min}}</p>
-                <p>Tisch: {{reservation.table.table_id}}</p>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Reservierung einsehen</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pulvinar pulvinar
+        lectus, id ultricies
+        dui tincidunt in. Quisque id metus nibh. Praesent consequat, enim quis facilisis pretium,
+        tortor ligula
+        bibendum nisl, et laoreet sem dolor id sem. Aenean sagittis consequat mattis. Phasellus
+        metus lectus, tincidunt
+        at rhoncus vitae, consequat et nisl.</p>
+      <img class="img-fluid center-block" alt="placeholder image" src="http://placehold.it/700x700" />
     </div>
+    <div class="col-md-6 p-5">
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <input class="container-fluid" type="text" formControlName="reservationNumber" required>
+        <div *ngIf="form.get('reservationNumber').invalid &&
+              (form.get('reservationNumber').dirty || form.get('reservationNumber').touched)"
+          class="alert alert-danger">
+          <div *ngIf="form.get('reservationNumber').errors.required">
+            Bitte Reservierungsnummer eingeben
+          </div>
+        </div>
+        <button class="btn btn-primary btn-mg col-md-2 mt-3 float-right" type="submit" [disabled]="!form.valid">
+          Ok
+        </button>
+      </form>
+
+      <div class="mt-5 py-5 px-2 float-left" *ngIf="reservation">
+        <p>Name: {{reservation.person.name}}</p>
+        <p>Personen: {{reservation.number_of_person}}</p>
+        <p>Datum: {{reservation.res_day}}</p>
+        <p>Zeit: {{reservation.res_time}}</p>
+        <p>Minuten: {{reservation.timeduration_min}}</p>
+        <p>Tisch: {{reservation.table.table_id}}</p>
+      </div>
+    </div>
+  </div>
 </div>
