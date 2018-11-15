@@ -1,21 +1,47 @@
 <div class="container container m-5 p-5">
-    <div class="row">
-        <div class="col-md-6">
-            <h1>Delete Reservation Page</h1> 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pulvinar pulvinar lectus, id ultricies dui tincidunt in. Quisque id metus nibh. Praesent consequat, enim quis facilisis pretium, tortor ligula bibendum nisl, et laoreet sem dolor id sem. Aenean sagittis consequat mattis. Phasellus metus lectus, tincidunt at rhoncus vitae, consequat et nisl.</p>
-            <img class="img-fluid center-block" 
-                alt="placeholder image" src="http://placehold.it/700x700"/>
-        </div>
-        <div class="col-md-6 p-5">
-            <input class="col-md-6 p-1" [value]="'Vorname'" #firstName />
-            <input class="col-md-6 p-1" [value]="'Familienname'" #familyName />
-            <input class="container-fluid mt-4 p-1" [value]="'Reservierungsnummer'" #reservationNumber />
-            <div class="container col-md-8 mt-5">
-                <button class="btn btn-primary btn-lg"
-                    (click)="onCancel(firstName.value, familyName.value, reservationNumber.value)">
-                    Ok
-                </button>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Delete Reservation Page</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pulvinar pulvinar
+        lectus, id ultricies dui tincidunt in. Quisque id metus nibh. Praesent consequat, enim quis
+        facilisis pretium, tortor ligula bibendum nisl, et laoreet sem dolor id sem. Aenean
+        sagittis consequat mattis. Phasellus metus lectus, tincidunt at rhoncus vitae, consequat et
+        nisl.</p>
+      <img class="img-fluid center-block" alt="placeholder image" src="http://placehold.it/700x700" />
     </div>
+    <div class="col-md-6 p-5">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <input class="col-md-6 p-1" type="text" formControlName="firstName" required>
+        <div *ngIf="form.get('firstName').invalid &&
+                  (form.get('firstName').dirty || form.get('firstName').touched)"
+          class="alert alert-danger">
+          <div *ngIf="form.get('firstName').errors.required">
+            Bitte Vorname eingeben
+          </div>
+        </div>
+        <input class="col-md-6 p-1" type="text" formControlName="familyName" required>
+        <div *ngIf="form.get('familyName').invalid &&
+                  (form.get('familyName').dirty || form.get('familyName').touched)"
+          class="alert alert-danger">
+          <div *ngIf="form.get('familyName').errors.required">
+            Bitte Familienname eingeben
+          </div>
+        </div>
+        <input class="col-md-6 p-1" type="text" formControlName="reservationNumber" required>
+        <div *ngIf="form.get('reservationNumber').invalid &&
+                  (form.get('reservationNumber').dirty || form.get('reservationNumber').touched)"
+          class="alert alert-danger">
+          <div *ngIf="form.get('reservationNumber').errors.required">
+            Bitte Reservierungsnummer eingeben
+          </div>
+        </div>
+
+        <div class="container col-md-8 mt-5">
+          <button class="btn btn-primary btn-mg col-md-2 mt-3 float-right" type="submit" [disabled]="!form.valid">
+            Ok
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
