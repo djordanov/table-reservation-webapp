@@ -24,50 +24,53 @@ export class ReservationCreateComponent {
 
   tableData: TableReservationStatus[] = [
     {
-      id: '1',
+      table_id: '1',
       row: 1,
       col: 1,
-      type: TableTypes['Tisch 2'],
+      type: '2',
       isReserved: false,
     },
     {
-      id: '2',
+      table_id: '2',
       row: 1,
       col: 3,
-      type: TableTypes['Tisch 1'],
-      isReserved: true,
+      type: '4',
+      isReserved: false,
     },
     {
-      id: '3',
+      table_id: '3',
       row: 2,
       col: 2,
-      type: TableTypes['Tisch 1'],
+      type: '4',
       isReserved: false,
     },
     {
-      id: '4',
+      table_id: '4',
       row: 2,
       col: 4,
-      type: TableTypes['Tisch 1'],
+      type: '4',
       isReserved: false,
     },
     {
-      id: '5',
+      table_id: '5',
       row: 3,
       col: 1,
-      type: TableTypes['Tisch 2'],
+      type: '2',
       isReserved: false,
     },
     {
-      id: '6',
+      table_id: '6',
       row: 3,
       col: 3,
-      type: TableTypes['Tisch 1'],
-      isReserved: true,
+      type: '4',
+      isReserved: false,
     }
   ];
 
-  constructor(private reservationService: ReservationService) {  }
+  constructor(private reservationService: ReservationService) {
+    reservationService.getTables().subscribe(e => console.log(e));
+    console.log(this.tableData);
+  }
 
   onTableClicked(tableID: number) {
     if (this.reservation.tableID === tableID) {

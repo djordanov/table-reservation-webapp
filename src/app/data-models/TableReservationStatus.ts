@@ -1,10 +1,10 @@
 import { TableTypes } from './TableTypes';
 
 export class TableReservationStatus {
-    id: string;
+    table_id: string;
     row: number;
     col: number;
-    type: TableTypes;
-    isReserved: boolean;
+    type: string;
+    isReserved?: boolean;
     isSelected?: boolean;
 }

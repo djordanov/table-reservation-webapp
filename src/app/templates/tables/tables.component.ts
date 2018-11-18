@@ -29,8 +29,8 @@ export class TablesComponent implements OnInit {
                             column.addEventListener('click', this.onTableClick, false);
                         }
                         const img = new Image();
-                        img.setAttribute('id', table.id);
-                        if (table.type === TableTypes['Tisch 1']) {
+                        img.setAttribute('id', table.table_id);
+                        if (table.type === '4') {
                             img.setAttribute('class', 'img-fluid table-1');
                             if (table.isReserved) {
                                 img.src = '../../../assets/images/Tisch1_grau.png';
