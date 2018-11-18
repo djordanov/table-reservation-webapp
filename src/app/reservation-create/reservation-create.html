@@ -1,8 +1,8 @@
+<ng-container *ngIf="tables$ | async as tables">
 <h1>Create Reservation Page</h1>
-
 <div class="row">
     <div class="col-md-7">
-        <app-tables [tableData]="tableData" (tableClicked)="onTableClicked($event)"></app-tables>
+        <app-tables [tableData]="tables?.table" (tableClicked)="onTableClicked($event)"></app-tables>
     </div>
     <div class="col-md-4" *ngIf="!isDateAndTimeSet">
         <h4> Wählen Sie zunächst Datum und Uhrzeit der Reservierung aus.</h4>
@@ -71,3 +71,4 @@
         </div>
     </div>
 </div>
+</ng-container>

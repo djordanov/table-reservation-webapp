@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
-import { TableReservationStatus } from '../data-models/TableReservationStatus';
+import { Component, OnInit } from '@angular/core';
+import { TableReservationStatus, GetTablesResponse } from '../data-models/TableReservationStatus';
 import { TableTypes } from '../data-models/TableTypes';
 import { ReservationService } from '../services/reservation.service';
 import { CreateReservation } from '../data-models/Reservation';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-reservation-create',
   templateUrl: './reservation-create.html',
   styleUrls: ['./reservation-create.css']
 })
-export class ReservationCreateComponent {
+export class ReservationCreateComponent implements OnInit {
 
   isDateAndTimeSet = false;
   isDateOnEdit = false;
@@ -22,54 +23,15 @@ export class ReservationCreateComponent {
     rest_id: 1,
   };
 
-  tableData: TableReservationStatus[] = [
-    {
-      table_id: '1',
-      row: 1,
-      col: 1,
-      type: '2',
-      isReserved: false,
-    },
-    {
-      table_id: '2',
-      row: 1,
-      col: 3,
-      type: '4',
-      isReserved: false,
-    },
-    {
-      table_id: '3',
-      row: 2,
-      col: 2,
-      type: '4',
-      isReserved: false,
-    },
-    {
-      table_id: '4',
-      row: 2,
-      col: 4,
-      type: '4',
-      isReserved: false,
-    },
-    {
-      table_id: '5',
-      row: 3,
-      col: 1,
-      type: '2',
-      isReserved: false,
-    },
-    {
-      table_id: '6',
-      row: 3,
-      col: 3,
-      type: '4',
-      isReserved: false,
-    }
-  ];
+  tables$: Observable<GetTablesResponse>;
+
+
 
   constructor(private reservationService: ReservationService) {
-    reservationService.getTables().subscribe(e => console.log(e));
-    console.log(this.tableData);
+  }
+
+  ngOnInit() {
+    this.tables$ = this.reservationService.getTables();
   }
 
   onTableClicked(tableID: number) {

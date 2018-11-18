@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 
 import { StaffMenuComponent } from './staff/menu/staff-menu.component';
 import { StaffCurrentReservationsComponent } from './staff/current-reservations/current-reservations.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { StaffCurrentReservationsComponent } from './staff/current-reservations/
     BootstrapModalModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
