@@ -10,21 +10,19 @@ import { parseTablesResponse } from '../../Utils';
   styleUrls: ['./current-reservations.component.css']
 })
 export class StaffCurrentReservationsComponent implements OnInit {
-
   tables: Table[];
 
-  constructor(private tableService: TableService) { }
+  constructor(private tableService: TableService) {}
 
   ngOnInit() {
     this.fetchReservations();
   }
 
   fetchReservations() {
-    this.tableService.getCurrentTableStatus()
-      .subscribe(response => {
-        console.log(JSON.stringify(response));
-        const tables = parseTablesResponse(response);
-        return tables.filter(table => table.res);
-      });
+    this.tableService.getCurrentTableStatus().subscribe(response => {
+      const tables = parseTablesResponse(response);
+      console.log(JSON.stringify(tables));
+      this.tables = tables.filter(table => table.res);
+    });
   }
 }

@@ -16,6 +16,7 @@ export class ReservationDetailsComponent {
     reservationNumber: ['Reservierungsnummer', Validators.required]
   });
   reservation: Reservation;
+  error: Error;
 
   constructor(
     private reservationService: ReservationService,
@@ -27,8 +28,13 @@ export class ReservationDetailsComponent {
   }
 
   getReservation(id: String): void {
+    this.error = null;
     this.reservationService.getReservation(id).subscribe(response => {
-      this.reservation = parseReservationResponse(response);
+      try {
+        this.reservation = parseReservationResponse(response);
+      } catch (err) {
+        this.error = err;
+      }
     });
   }
 }
