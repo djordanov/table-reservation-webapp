@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Reservation, CreateReservation, TableReservedRequestPayload } from '../data-models/Reservation';
+import { CreateReservation, TableReservedRequestPayload } from '../data-models/Reservation';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RequestOptions, Headers } from '@angular/http';
 import { baseURL } from '../Config.js';
@@ -32,8 +32,13 @@ export class ReservationService {
       );
   }
 
-  getTablesByDateAndTime(payload: TableReservedRequestPayload) {
-    const url = baseURL + '/php/tische_datum_uhrzeit.php';
+  getTablesByDateAndTime(body: TableReservedRequestPayload): Observable<any> {
+    const url = baseURL + '/tische_datum_uhrzeit.php';
+    const headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
+    return this.http.post(url, body, {headers})
+    .pipe(  // TODO this throws an error for some reason, but it works for now
+      catchError(this.handleError<any>(`getTablesByDateAndTime`))
+    );
   }
 
   delete(id: String): Observable<any> {
@@ -44,8 +49,13 @@ export class ReservationService {
     );
   }
 
-  createReservation(payload: CreateReservation): Observable<void> {
-    return of(alert('Reservation Create not implemented yet \n\n payload: ' + payload));
+  createReservation(body: CreateReservation): Observable<any> {
+    const url = baseURL + '/reservierung_anlegen.php';
+    const headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
+    return this.http.post(url, body, {headers})
+    .pipe(  // TODO this throws an error for some reason, but it works for now
+      catchError(this.handleError<any>(`reservierung_anlegen`))
+    );
   }
 
   /**

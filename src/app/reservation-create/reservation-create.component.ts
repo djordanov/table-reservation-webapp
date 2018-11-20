@@ -25,8 +25,6 @@ export class ReservationCreateComponent implements OnInit {
 
   tables$: Observable<GetTablesResponse>;
 
-
-
   constructor(private reservationService: ReservationService) {
   }
 
@@ -43,7 +41,7 @@ export class ReservationCreateComponent implements OnInit {
   }
 
   createReservation() {
-    this.reservationService.createReservation(this.reservation);
+    this.reservationService.createReservation(this.reservation).subscribe();
   }
 
   setDateAndTime() {
@@ -51,7 +49,11 @@ export class ReservationCreateComponent implements OnInit {
       this.isDateAndTimeSet = true;
       this.reservationTime.date = this.reservation.date;
       this.reservationTime.time = this.reservation.time;
-
+      this.tables$ = this.reservationService.getTablesByDateAndTime({
+        rest_id: 1,
+        date: this.reservation.date,
+        time: this.reservation.time,
+      });
     }
   }
 
@@ -68,6 +70,11 @@ export class ReservationCreateComponent implements OnInit {
       this.reservation.date = this.reservationTime.date;
       this.reservation.time = this.reservationTime.time;
       this.isDateOnEdit = false;
+      this.tables$ = this.reservationService.getTablesByDateAndTime({
+        rest_id: 1,
+        date: this.reservation.date,
+        time: this.reservation.time,
+      });
     }
   }
 }
