@@ -24,7 +24,9 @@ const parseReservationResponse = (reservationResponse: any): Reservation => {
   }
 
   const reservation = reservationResponse.info_res;
-  reservation.table = reservationResponse.info_table;
+  if (reservation.table) {
+    reservation.table = reservationResponse.info_table;
+  }
   reservation.person = reservationResponse.info_person;
   return reservation;
 };
@@ -42,7 +44,7 @@ const parseTablesResponse = (tablesResponse: any): Table[] => {
 
 const parseTableResponse = (tableResponse: any): Table => {
   const table: Table = new Table(tableResponse.table_id);
-  for (const key of tableResponse) {
+  for (const key of Object.keys(tableResponse)) {
     table[key] = tableResponse[key];
   }
   return table;

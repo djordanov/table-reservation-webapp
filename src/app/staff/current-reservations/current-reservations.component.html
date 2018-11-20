@@ -1,10 +1,12 @@
 <table>
-  <tr ng-repeat="table in tables">
-    <td>{{ table.res.person.name }}</td>
-    <td>{{ table.id }}</td>
-    <td>{{ table.res.number_of_person }}</td>
-    <td>{{ table.res.id }}</td>
-    <td>Besondere Anmerkungen</td>
-    <td>stornieren / abgeschlossen</td>
-  </tr>
+  <div *ngFor="let table of tables">
+    <tr *ngFor="let reservation of table.res">
+      <td>{{ reservation.name }}</td>
+      <td>{{ table.table_id }}</td>
+      <td>{{ reservation.number_of_person }}</td>
+      <td>{{ reservation.reservation_id }}</td>
+      <td>Besondere Anmerkungen</td>
+      <td>stornieren / abgeschlossen</td>
+    </tr>
+  </div>
 </table>
