@@ -2,7 +2,7 @@
     background-image: url("../../../assets/images/Hintergrund-updated1.png");
     width: 100%;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     margin-right: 30px;
 }
 

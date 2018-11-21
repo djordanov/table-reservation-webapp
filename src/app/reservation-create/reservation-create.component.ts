@@ -4,6 +4,8 @@ import { TableTypes } from '../data-models/TableTypes';
 import { ReservationService } from '../services/reservation.service';
 import { CreateReservation } from '../data-models/Reservation';
 import { Observable, of } from 'rxjs';
+import { $ } from 'protractor';
+import { parseTwoDigitYear } from 'ngx-bootstrap/chronos/units/year';
 
 @Component({
   selector: 'app-reservation-create',
@@ -14,6 +16,9 @@ export class ReservationCreateComponent implements OnInit {
 
   isDateAndTimeSet = false;
   isDateOnEdit = false;
+
+  today = new Date();
+  formattedToday = this.today.getDate() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getFullYear();
 
   reservationTime: { date: Date, time: String } = { date: undefined, time: undefined };
 
@@ -38,9 +43,11 @@ export class ReservationCreateComponent implements OnInit {
     } else {
       this.reservation.tableID = tableID;
     }
+    console.log(this.reservation.tableID);
   }
 
   createReservation() {
+    console.log(this.reservation);
     this.reservationService.createReservation(this.reservation).subscribe();
   }
 

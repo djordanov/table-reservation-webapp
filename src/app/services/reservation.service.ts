@@ -34,12 +34,13 @@ export class ReservationService {
       );
   }
 
-  getTablesByDateAndTime(body: TableReservedRequestPayload): Observable<any> {
-    const url = baseURL + '/tische_datum_uhrzeit.php';
-    const headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
-    return this.http.post(url, body, {headers})
+  getTablesByDateAndTime(payload: TableReservedRequestPayload): Observable<any> {
+    const url = baseURL + '/tische_datum_uhrzeit.php?rest_id=' + payload.rest_id +
+      '&date=' + payload.date + '&time=' + payload.time;
+    return this.http.get(url)
     .pipe(  // TODO this throws an error for some reason, but it works for now
-      catchError(this.handleError<any>(`getTablesByDateAndTime`))
+      catchError(this.handleError<any>(`getTablesByDateAndTime` + '?rest_id=' + payload.rest_id +
+        '&date=' + payload.date + '&time=' + payload.time))
     );
   }
 

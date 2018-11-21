@@ -9,6 +9,6 @@ export class TableReservationStatus {
     row: number;
     col: number;
     type: string;
-    frei: number;
+    frei: boolean;
     isSelected?: boolean;
 }
