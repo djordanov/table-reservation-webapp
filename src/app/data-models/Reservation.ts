@@ -3,7 +3,7 @@ import { Person } from './Person';
 
 export class Reservation {
   reservation_id: String;
-  reser_pid: String; // reservation number for customer
+  res_pid: String; // reservation number for customer
   table: Table;
   person: Person;
   created_at: Date;

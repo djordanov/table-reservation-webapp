@@ -21,7 +21,6 @@ export class StaffCurrentReservationsComponent implements OnInit {
   fetchReservations() {
     this.tableService.getCurrentTableStatus().subscribe(response => {
       const tables = parseTablesResponse(response);
-      console.log(JSON.stringify(tables));
       this.tables = tables.filter(table => table.res);
     });
   }
