@@ -13,14 +13,14 @@ const parseReservationResponse = (reservationResponse: any): Reservation => {
     reservationResponse.result === 'error' &&
     reservationResponse.text === 'Falsche RES_PID'
   ) {
-    throw new Error('Reservierungsnummer nicht gefunden');
+    throw new Error(reservationNotFound);
   }
   // reservation was cancelled
   if (
     reservationResponse.result === 'error' &&
     reservationResponse.text === 'Durch Kunde storniert'
   ) {
-    throw new Error('Reservierung wurde bereits storniert');
+    throw new Error(reservationCancelled);
   }
 
   const reservation = reservationResponse.info_res;
@@ -33,8 +33,7 @@ const parseReservationResponse = (reservationResponse: any): Reservation => {
 
 const parseTablesResponse = (tablesResponse: any): Table[] => {
   if (tablesResponse.result === 'error') {
-    alert('Coudn\t access tables for some reason'); // TODO better error message
-    return;
+    throw new Error(tablesResponse.text);
   }
 
   return tablesResponse.table.map(tableResponse => {

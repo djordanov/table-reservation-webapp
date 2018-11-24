@@ -1,20 +1,22 @@
-<table class="table">
-  <div *ngFor="let table of tables">
-    <tr>
-      <td>Tischnummer</td>
-      <td>Reservierungsnummer</td>
-      <td>Datum</td>
-      <td>Uhrzeit</td>
-      <td>Anzahl an Personen</td>
-      <td>Reserviert von</td>
-    </tr>
-    <tr *ngFor="let reservation of table.res">
-      <td>{{ table.table_id }}</td>
-      <td>{{ reservation.res_pid }}</td>
-      <td>{{ reservation.day }}</td>
-      <td>{{ reservation.res_time }}</td>
-      <td>{{ reservation.number_of_person }}</td>
-      <td>{{ reservation.person.name }}</td>
-    </tr>
-  </div>
-</table>
+<div class="table-responsive">
+  <table class="table">
+    <div *ngFor="let table of tables">
+      <tr>
+        <td>Tischnummer</td>
+        <td>Reservierungsnummer</td>
+        <td>Datum</td>
+        <td>Uhrzeit</td>
+        <td>Anzahl an Personen</td>
+        <td>Reserviert von</td>
+      </tr>
+      <tr *ngFor="let reservation of table.res">
+        <td>{{ table.table_id }}</td>
+        <td>{{ reservation.res_pid }}</td>
+        <td>{{ reservation.day }}</td>
+        <td>{{ reservation.res_time }}</td>
+        <td>{{ reservation.number_of_person }}</td>
+        <td>{{ reservation.person.name }}</td>
+      </tr>
+    </div>
+  </table>
+</div>

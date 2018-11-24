@@ -13,11 +13,19 @@ export class TableService {
 
   getCurrentTableStatus(): Observable<any> {
     const url = baseURL + '/tische_datum_uhrzeit_personal.php';
+    const rest_id = 1;
+    const now = new Date();
+    const today =
+      now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+    const time =
+      now.getHours() +
+      ':' +
+      (now.getMinutes() < 10 ? now.getMinutes() : '0' + now.getMinutes());
+
     const data = {
-      // TODO improve
-      rest_id: 1,
-      date: '2018-11-09',
-      time: '18:00'
+      rest_id: rest_id,
+      date: today,
+      time: time
     };
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
