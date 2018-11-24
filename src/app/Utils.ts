@@ -11,16 +11,16 @@ const parseReservationResponse = (reservationResponse: any): Reservation => {
   // reservation doesn't exist
   if (
     reservationResponse.result === 'error' &&
-    reservationResponse.text === 'Falsche RES_ID'
+    reservationResponse.text === 'Falsche RES_PID'
   ) {
-    throw new Error('Reservation doesn\'t exist');
+    throw new Error('Reservierungsnummer nicht gefunden');
   }
   // reservation was cancelled
   if (
     reservationResponse.result === 'error' &&
     reservationResponse.text === 'Durch Kunde storniert'
   ) {
-    throw new Error('Reservation was cancelled');
+    throw new Error('Reservierung wurde bereits storniert');
   }
 
   const reservation = reservationResponse.info_res;
