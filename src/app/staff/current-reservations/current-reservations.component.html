@@ -1,3 +1,16 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input type=" date" formControlName="date" required>
+  <div *ngIf="form.get('date').invalid && (form.get('date').dirty || form.get('date').touched)"
+    class="alert alert-danger">
+    Bitte geben Sie ein gültiges Datum ein!
+  </div>
+  <input type="time" formControlName="time" required>
+  <div *ngIf="form.get('time').invalid && (form.get('time').dirty || form.get('time').touched)"
+    class="alert alert-danger">
+    Bitte geben Sie eine gültige Zeit ein!
+  </div>
+</form>
+
 <div class="table-responsive">
   <table class="table">
     <div *ngFor="let table of tables">
