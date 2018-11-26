@@ -4,7 +4,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ReservationService } from '../services/reservation.service';
 
 import { parseReservationResponse } from '../Utils';
-import { reservDMatchName } from '../Config';
 import { Reservation } from '../data-models/Reservation';
 
 @Component({
