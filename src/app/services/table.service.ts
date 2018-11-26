@@ -15,20 +15,13 @@ export class TableService {
   getTableStatus(date: Date): Observable<any> {
     const url = baseURL + '/tische_datum_uhrzeit_personal.php';
     const rest_id = 1;
-    const today =
-      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-    const time =
-      date.getHours() +
-      ':' +
-      (date.getMinutes() < 10 ? date.getMinutes() : '0' + date.getMinutes());
-
-    const tdate = formatDate(date, 'yyyy-MM-dd', 'en_US');
-    const ttime = formatDate(date, 'HH:mm:ss', 'en_US');
+    const dateDay = formatDate(date, 'yyyy-MM-dd', 'en_US');
+    const dateTime = formatDate(date, 'HH:mm:ss', 'en_US');
 
     const data = {
       rest_id: rest_id,
-      date: tdate,
-      time: ttime
+      date: dateDay,
+      time: dateTime
     };
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'

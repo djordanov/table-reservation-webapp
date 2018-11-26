@@ -13,7 +13,7 @@
 
 <div class="table-responsive">
   <table class="table">
-    <div *ngFor="let table of tables">
+    <div>
       <tr>
         <td>Tischnummer</td>
         <td>Reservierungsnummer</td>
@@ -21,14 +21,20 @@
         <td>Uhrzeit</td>
         <td>Anzahl an Personen</td>
         <td>Reserviert von</td>
+        <td>Stornieren</td>
       </tr>
+    </div>
+    <div *ngFor="let table of tables">
       <tr *ngFor="let reservation of table.res">
         <td>{{ table.table_id }}</td>
         <td>{{ reservation.res_pid }}</td>
-        <td>{{ reservation.day }}</td>
+        <td>{{ reservation.res_day }}</td>
         <td>{{ reservation.res_time }}</td>
         <td>{{ reservation.number_of_person }}</td>
         <td>{{ reservation.person.name }}</td>
+        <td>
+          <button class="btn btn-primary">Stornieren</button>
+        </td>
       </tr>
     </div>
   </table>
