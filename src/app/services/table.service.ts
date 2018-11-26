@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -11,13 +12,23 @@ import { baseURL } from '../Config.js';
 export class TableService {
   constructor(private http: HttpClient) {}
 
-  getCurrentTableStatus(): Observable<any> {
+  getTableStatus(date: Date): Observable<any> {
     const url = baseURL + '/tische_datum_uhrzeit_personal.php';
+    const rest_id = 1;
+    const today =
+      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    const time =
+      date.getHours() +
+      ':' +
+      (date.getMinutes() < 10 ? date.getMinutes() : '0' + date.getMinutes());
+
+    const tdate = formatDate(date, 'yyyy-MM-dd', 'en_US');
+    const ttime = formatDate(date, 'HH:mm:ss', 'en_US');
+
     const data = {
-      // TODO improve
-      rest_id: 1,
-      date: '2018-11-09',
-      time: '18:00'
+      rest_id: rest_id,
+      date: tdate,
+      time: ttime
     };
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'

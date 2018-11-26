@@ -13,6 +13,7 @@ import { parseReservationResponse } from '../Utils';
   styleUrls: ['./reservation-delete.css']
 })
 export class ReservationDeleteComponent {
+  error: Error;
   form = this.fb.group({
     firstName: ['Vorname', Validators.required],
     familyName: ['Familienname', Validators.required],
@@ -42,11 +43,15 @@ export class ReservationDeleteComponent {
     this.reservationService
       .getReservation(reservationNumber)
       .subscribe(reservationResponse => {
-        const reservation = parseReservationResponse(reservationResponse);
-        if (reservation.person.name === name) {
-          this.openConfirm(reservation);
-        } else {
-          alert('Name doesn\'t match reservation number');
+        try {
+          const reservation = parseReservationResponse(reservationResponse);
+          if (reservation.person.name === name) {
+            this.openConfirm(reservation);
+          } else {
+            throw new Error('Name passt nicht zur Reservierungsnummer');
+          }
+        } catch (err) {
+          this.error = err;
         }
       });
   }
@@ -80,8 +85,7 @@ export class ReservationDeleteComponent {
       .getReservation(reservationID)
       .subscribe(reservationResponse => {
         if (!reservationResponse) {
-          // specified reservation is missing
-          return;
+          throw new Error('Reservierungsnummer existiert nicht');
         }
 
         const reservation_id = reservationResponse.info_res.reservation_id; // TODO add error handling
