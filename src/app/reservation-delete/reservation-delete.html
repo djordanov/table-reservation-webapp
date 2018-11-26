@@ -11,23 +11,11 @@
     </div>
     <div class="col-md-6 p-5">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <input class="col-md-6 p-1" type="text" formControlName="firstName" required>
-        <div *ngIf="form.get('firstName').invalid &&
-                  (form.get('firstName').dirty || form.get('firstName').touched)"
-          class="alert alert-danger">
-          <div *ngIf="form.get('firstName').errors.required">
-            Bitte Vorname eingeben
-          </div>
-        </div>
-        <input class="col-md-6 p-1" type="text" formControlName="familyName" required>
-        <div *ngIf="form.get('familyName').invalid &&
-                  (form.get('familyName').dirty || form.get('familyName').touched)"
-          class="alert alert-danger">
-          <div *ngIf="form.get('familyName').errors.required">
-            Bitte Familienname eingeben
-          </div>
-        </div>
-        <input class="col-md-6 p-1" type="text" formControlName="reservationNumber" required>
+        <input class="col-md-6" type="text" formControlName="reservationNumber" required>
+        <button class="btn btn-primary btn-block btn-mg col-md-2 float-right" type="submit"
+          [disabled]="!form.valid">
+          Ok
+        </button>
         <div *ngIf="form.get('reservationNumber').invalid &&
                   (form.get('reservationNumber').dirty || form.get('reservationNumber').touched)"
           class="alert alert-danger">
@@ -38,13 +26,10 @@
         <div *ngIf="this.error" class="alert alert-danger">
           {{error.message}}
         </div>
-
-        <div class="container col-md-8 mt-5">
-          <button class="btn btn-primary btn-mg col-md-2 mt-3 float-right" type="submit" [disabled]="!form.valid">
-            Ok
-          </button>
-        </div>
       </form>
     </div>
   </div>
+</div>
+<div *ngIf="openConfirm">
+  <app-cancel-modal [reservation]="reservation"></app-cancel-modal>
 </div>

@@ -18,7 +18,6 @@
     "@angular/core": "^7.0.3",
     "@angular/forms": "^7.0.3",
     "@angular/http": "^7.0.3",
-    "@angular/material": "^7.0.2",
     "@angular/platform-browser": "^7.0.3",
     "@angular/platform-browser-dynamic": "^7.0.3",
     "@angular/router": "^7.0.3",

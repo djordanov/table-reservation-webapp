@@ -1,0 +1,12 @@
+<h2>Sind Sie sicher, dass Sie folgende Reservierung
+  stornieren wollen?</h2>
+<div class="container float-right mt-5 ml-4">
+  <p>Reservierungsnummer: reservation.res_pid</p>
+  <p>Name: reservation.person.name</p>
+  <p>Personen: reservation.number_of_person</p>
+  <p>Tisch: reservation.table.table_id</p>
+  <p>Datum: reservation.res_day</p>
+  <p>Zeit: reservation.res_time</p>
+  <p>Dauer: reservation.timeduration_min min.</p>
+  <div class="btn btn-primary btn-sm" (click)="onConfirm()">Ja, bitte Reservierung stornieren</div>
+</div>
