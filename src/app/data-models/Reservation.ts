@@ -24,6 +24,13 @@ export class CreateReservation {
     time: String;
 }
 
+export class CreateReservationResponse {
+    result: string;
+    text: string;
+    res_id: number;
+    res_pid: string;
+}
+
 export class TableReservedRequestPayload {
     rest_id: number;
     date: Date;

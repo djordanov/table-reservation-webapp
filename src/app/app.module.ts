@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { StaffMenuComponent } from './staff/menu/staff-menu.component';
 import { StaffCurrentReservationsComponent } from './staff/current-reservations/current-reservations.component';
 import { CommonModule } from '@angular/common';
+import { ReservationCreateResponseComponent } from './reservation-create-response/reservation-create-response';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CommonModule } from '@angular/common';
     ReservationMenuComponent,
     TablesComponent,
     StaffMenuComponent,
-    StaffCurrentReservationsComponent
+    StaffCurrentReservationsComponent,
+    ReservationCreateResponseComponent,
   ],
   imports: [
     BrowserModule,

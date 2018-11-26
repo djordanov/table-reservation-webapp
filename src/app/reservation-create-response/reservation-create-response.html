@@ -1,0 +1,15 @@
+<div *ngIf="response?.result === 'successful'" class="row mt-2">
+    <div class="col-md-7 ml-2">
+        <h1>Reservierung erfolgreich angelegt!</h1>
+        <span>Sehr geehrte/ geehrter {{reservation?.firstName}} {{reservation?.lastName}}</span><br><br>
+        <span>Ihre Reservierung mit der Nummer </span><strong>{{response?.res_pid}}</strong><span> wurde an uns erfolgreich übermittelt.</span><br>
+        <span>Wir haben eine E-Mail an Ihre E-Mail-Adresse </span><strong>{{reservation?.email}}</strong><span> mit allen Reservierungsdetails geschickt.</span><br>
+        <span>Um Ihre Reservierung nun zu bestätigen, müssen Sie nur auf den Bestätigungslink in der E-Mail klicken.</span><br>
+        <button class="btn btn-primary btn-block mt-2" (click)="onBackClick()">Zurück zur Hauptseite</button>
+    </div>
+    <div class="col-md-4 ml-2 mr-2">
+        <img src="../../assets/images/create-reservation-success.jpg" class="rounded mx-auto d-block col-md-12 mt-2" alt="Success_Image">
+    </div>
+</div>
+<div *ngIf="response?.result === 'error'">
+</div>

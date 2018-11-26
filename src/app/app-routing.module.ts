@@ -7,11 +7,14 @@ import { ReservationDeleteComponent } from './reservation-delete/reservation-del
 
 import { StaffMenuComponent } from './staff/menu/staff-menu.component';
 import { StaffCurrentReservationsComponent } from './staff/current-reservations/current-reservations.component';
+import { ReservationCreateResponseComponent } from './reservation-create-response/reservation-create-response';
 
 const routes: Routes = [
   { path: '', redirectTo: 'reservation', pathMatch: 'full' },
   { path: 'reservation', component: ReservationMenuComponent },
   { path: 'reservation/create', component: ReservationCreateComponent },
+  { path: 'reservation/create/success', component: ReservationCreateResponseComponent },
+  { path: 'reservation/create/failed', component: ReservationCreateResponseComponent },
   { path: 'reservation/details', component: ReservationDetailsComponent },
   { path: 'reservation/delete', component: ReservationDeleteComponent },
   { path: 'staff/menu', component: StaffMenuComponent },

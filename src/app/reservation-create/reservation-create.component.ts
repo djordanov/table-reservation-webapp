@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TableReservationStatus, GetTablesResponse } from '../data-models/TableReservationStatus';
-import { TableTypes } from '../data-models/TableTypes';
+import { GetTablesResponse } from '../data-models/TableReservationStatus';
 import { ReservationService } from '../services/reservation.service';
-import { CreateReservation } from '../data-models/Reservation';
+import { CreateReservation, CreateReservationResponse } from '../data-models/Reservation';
 import { Observable, of } from 'rxjs';
-import { $ } from 'protractor';
-import { parseTwoDigitYear } from 'ngx-bootstrap/chronos/units/year';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reservation-create',
@@ -16,6 +14,7 @@ export class ReservationCreateComponent implements OnInit {
 
   isDateAndTimeSet = false;
   isDateOnEdit = false;
+  isReservationRequestSend = false;
 
   today = new Date();
   formattedToday = this.today.getDate() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getFullYear();
@@ -27,6 +26,8 @@ export class ReservationCreateComponent implements OnInit {
     email: '', numberOfPersons: undefined, date: undefined, time: undefined,
     rest_id: 1,
   };
+
+  response$: Observable<CreateReservationResponse>;
 
   tables$: Observable<GetTablesResponse>;
 
@@ -43,12 +44,11 @@ export class ReservationCreateComponent implements OnInit {
     } else {
       this.reservation.tableID = tableID;
     }
-    console.log(this.reservation.tableID);
   }
 
   createReservation() {
-    console.log(this.reservation);
-    this.reservationService.createReservation(this.reservation).subscribe();
+    this.isReservationRequestSend = true;
+    this.response$ = this.reservationService.createReservation(this.reservation);
   }
 
   setDateAndTime() {
