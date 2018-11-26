@@ -8,6 +8,7 @@ import { ReservationDeleteComponent } from './reservation-delete/reservation-del
 import { StaffMenuComponent } from './staff/menu/staff-menu.component';
 import { StaffCurrentReservationsComponent } from './staff/current-reservations/current-reservations.component';
 import { ReservationCreateResponseComponent } from './reservation-create-response/reservation-create-response';
+import { StaffBookingPlanComponent } from './staff/staff-booking-plan/staff-booking-plan.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'reservation', pathMatch: 'full' },
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'staff/current-reservations',
     component: StaffCurrentReservationsComponent
+  },
+  {
+    path: 'staff/booking-plan',
+    component: StaffBookingPlanComponent
   }
 ];
 

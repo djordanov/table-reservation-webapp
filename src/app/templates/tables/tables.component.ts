@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { TableReservationStatus } from 'src/app/data-models/TableReservationStatus';
-import { TableTypes } from 'src/app/data-models/TableTypes';
 
 @Component({
   selector: 'app-tables',
@@ -25,7 +24,7 @@ export class TablesComponent implements OnInit {
                     const columns = row.getElementsByClassName('column-' + table.col);
                     if (columns.length === 1) {
                         const column = columns[0];
-                        if (table.frei !== false) {
+                        if (table.frei !== false && this.isClickable) {
                             column.addEventListener('click', this.onTableClick, false);
                         }
                         const img = new Image();

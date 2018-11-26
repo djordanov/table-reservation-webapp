@@ -22,6 +22,7 @@ import { StaffCurrentReservationsComponent } from './staff/current-reservations/
 import { CommonModule } from '@angular/common';
 import { ReservationCreateResponseComponent } from './reservation-create-response/reservation-create-response';
 import { CancelModalComponent } from './cancel-modal/cancel-modal.component';
+import { StaffBookingPlanComponent } from './staff/staff-booking-plan/staff-booking-plan.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { CancelModalComponent } from './cancel-modal/cancel-modal.component';
     StaffMenuComponent,
     StaffCurrentReservationsComponent,
     ReservationCreateResponseComponent,
-    CancelModalComponent
+    CancelModalComponent,
+    StaffBookingPlanComponent
   ],
   imports: [
     BrowserModule,
