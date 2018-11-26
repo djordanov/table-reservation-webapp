@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GetTablesResponse } from '../data-models/TableReservationStatus';
 import { ReservationService } from '../services/reservation.service';
+import { TableService } from '../services/table.service';
 import { CreateReservation, CreateReservationResponse } from '../data-models/Reservation';
 import { Observable, of } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reservation-create',
@@ -31,11 +31,12 @@ export class ReservationCreateComponent implements OnInit {
 
   tables$: Observable<GetTablesResponse>;
 
-  constructor(private reservationService: ReservationService) {
+  constructor(private reservationService: ReservationService,
+    private tableService: TableService) {
   }
 
   ngOnInit() {
-    this.tables$ = this.reservationService.getTables();
+    this.tables$ = this.tableService.getTables();
   }
 
   onTableClicked(tableID: number) {
@@ -56,7 +57,7 @@ export class ReservationCreateComponent implements OnInit {
       this.isDateAndTimeSet = true;
       this.reservationTime.date = this.reservation.date;
       this.reservationTime.time = this.reservation.time;
-      this.tables$ = this.reservationService.getTablesByDateAndTime({
+      this.tables$ = this.tableService.getTablesByDateAndTime({
         rest_id: 1,
         date: this.reservation.date,
         time: this.reservation.time,
@@ -77,7 +78,7 @@ export class ReservationCreateComponent implements OnInit {
       this.reservation.date = this.reservationTime.date;
       this.reservation.time = this.reservationTime.time;
       this.isDateOnEdit = false;
-      this.tables$ = this.reservationService.getTablesByDateAndTime({
+      this.tables$ = this.tableService.getTablesByDateAndTime({
         rest_id: 1,
         date: this.reservation.date,
         time: this.reservation.time,

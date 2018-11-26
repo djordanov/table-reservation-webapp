@@ -3,14 +3,55 @@ import { formatDate } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { RequestOptions, Headers } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { baseURL } from '../Config.js';
+import { TableReservedRequestPayload } from '../data-models/Reservation';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TableService {
   constructor(private http: HttpClient) {}
+
+  getTables(): Observable<any> {
+    const url = baseURL + '/get_tables.php?res_id=1';
+    const headers = new Headers({ 'Content - Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    return this.http
+      .get(url)
+      .pipe(
+        catchError(this.handleError<any>(`get_tables.php?res_id=1`, options))
+      );
+  }
+
+  getTablesByDateAndTime(
+    payload: TableReservedRequestPayload
+  ): Observable<any> {
+    const url =
+      baseURL +
+      '/tische_datum_uhrzeit.php?rest_id=' +
+      payload.rest_id +
+      '&date=' +
+      payload.date +
+      '&time=' +
+      payload.time;
+    return this.http.get(url).pipe(
+      // TODO this throws an error for some reason, but it works for now
+      catchError(
+        this.handleError<any>(
+          `getTablesByDateAndTime` +
+            '?rest_id=' +
+            payload.rest_id +
+            '&date=' +
+            payload.date +
+            '&time=' +
+            payload.time
+        )
+      )
+    );
+  }
 
   getTableStatus(date: Date): Observable<any> {
     const url = baseURL + '/tische_datum_uhrzeit_personal.php';
