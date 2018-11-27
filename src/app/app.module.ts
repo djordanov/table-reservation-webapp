@@ -21,6 +21,7 @@ import { StaffMenuComponent } from './staff/menu/staff-menu.component';
 import { StaffCurrentReservationsComponent } from './staff/current-reservations/current-reservations.component';
 import { CommonModule } from '@angular/common';
 import { ReservationCreateResponseComponent } from './reservation-create-response/reservation-create-response';
+import { HeaderComponent } from './templates/header/header.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ReservationCreateResponseComponent } from './reservation-create-respons
     StaffMenuComponent,
     StaffCurrentReservationsComponent,
     ReservationCreateResponseComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

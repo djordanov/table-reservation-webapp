@@ -1,3 +1,4 @@
+<app-header [role]="'Kunde'" [title]="'Reservierung anlegen'"></app-header>
 <ng-container *ngIf="tables$ | async as tables">
 <div *ngIf="isReservationRequestSend">
     <ng-container *ngIf="response$ | async as response">
@@ -5,7 +6,6 @@
     </ng-container>
 </div>
 <div *ngIf="!isReservationRequestSend">
-    <h1 class="ml-2">Create Reservation Page</h1>
     <div class="row">
         <div class="col-md-7 ml-2">
             <app-tables [tableData]="tables?.table" (tableClicked)="onTableClicked($event)"></app-tables>
