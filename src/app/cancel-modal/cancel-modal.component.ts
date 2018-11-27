@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ReservationService } from '../services/reservation.service';
 import { Reservation } from '../data-models/Reservation';
@@ -10,7 +11,9 @@ import { Reservation } from '../data-models/Reservation';
 })
 export class CancelModalComponent implements OnInit {
   @Input() reservation: Reservation;
-  constructor(private reservationService: ReservationService) {}
+  @Input() name: String;
+  constructor(private reservationService: ReservationService,
+    public activeModal: NgbActiveModal) {}
 
   ngOnInit() {}
 

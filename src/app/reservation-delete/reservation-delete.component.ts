@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 import { ReservationService } from '../services/reservation.service';
 
 import { parseReservationResponse } from '../Utils';
 import { Reservation } from '../data-models/Reservation';
+import { CancelModalComponent } from '../cancel-modal/cancel-modal.component';
 
 @Component({
   selector: 'app-reservation-delete',
@@ -21,11 +24,15 @@ export class ReservationDeleteComponent {
 
   constructor(
     private reservationService: ReservationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modalService: NgbModal
   ) {}
 
   onSubmit(): void {
-    this.onCancel(this.form.get('reservationNumber').value);
+    const modalRef = this.modalService.open(CancelModalComponent);
+    modalRef.componentInstance.name = 'World';
+
+    // this.onCancel(this.form.get('reservationNumber').value);
   }
 
   onCancel(reservationNumber: String): void {
