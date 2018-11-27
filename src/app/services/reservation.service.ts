@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
-import {
-  CreateReservation,
-  TableReservedRequestPayload
-} from '../data-models/Reservation';
+import { CreateReservation } from '../data-models/Reservation';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { RequestOptions, Headers } from '@angular/http';
 import { baseURL } from '../Config.js';
 
 @Injectable({
@@ -23,27 +19,6 @@ export class ReservationService {
       .pipe(catchError(this.handleError<any>(`getReservation id=${id}`, null)));
   }
 
-  getTables(): Observable<any> {
-    const url = baseURL + '/get_tables.php?res_id=1';
-    const headers = new Headers({ 'Content - Type': 'application/json' });
-    const options = new RequestOptions({ headers: headers });
-    return this.http
-      .get(url)
-      .pipe(
-        catchError(this.handleError<any>(`get_tables.php?res_id=1`, options))
-      );
-  }
-
-  getTablesByDateAndTime(payload: TableReservedRequestPayload): Observable<any> {
-    const url = baseURL + '/tische_datum_uhrzeit.php?rest_id=' + payload.rest_id +
-      '&date=' + payload.date + '&time=' + payload.time;
-    return this.http.get(url)
-    .pipe(  // TODO this throws an error for some reason, but it works for now
-      catchError(this.handleError<any>(`getTablesByDateAndTime` + '?rest_id=' + payload.rest_id +
-        '&date=' + payload.date + '&time=' + payload.time))
-    );
-  }
-
   delete(id: String): Observable<any> {
     const url = baseURL + '/reservierung_loeschen.php?reser_id=' + id;
     return this.http.get<any>(url).pipe(
@@ -54,9 +29,9 @@ export class ReservationService {
 
   createReservation(body: CreateReservation): Observable<any> {
     const url = baseURL + '/reservierung_anlegen.php';
-    const headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
-    return this.http.post(url, body, {headers})
-    .pipe(  // TODO this throws an error for some reason, but it works for now
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(url, body, { headers }).pipe(
+      // TODO this throws an error for some reason, but it works for now
       catchError(this.handleError<any>(`reservierung_anlegen`))
     );
   }

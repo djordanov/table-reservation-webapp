@@ -3,8 +3,11 @@ import { formatDate } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { RequestOptions, Headers } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { baseURL } from '../Config.js';
+import { TableReservedRequestPayload } from '../data-models/Reservation';
 
 @Injectable({
   providedIn: 'root'
@@ -12,23 +15,54 @@ import { baseURL } from '../Config.js';
 export class TableService {
   constructor(private http: HttpClient) {}
 
+  getTables(): Observable<any> {
+    const url = baseURL + '/get_tables.php?res_id=1';
+    const headers = new Headers({ 'Content - Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    return this.http
+      .get(url)
+      .pipe(
+        catchError(this.handleError<any>(`get_tables.php?res_id=1`, options))
+      );
+  }
+
+  getTablesByDateAndTime(
+    payload: TableReservedRequestPayload
+  ): Observable<any> {
+    const url =
+      baseURL +
+      '/tische_datum_uhrzeit.php?rest_id=' +
+      payload.rest_id +
+      '&date=' +
+      payload.date +
+      '&time=' +
+      payload.time;
+    return this.http.get(url).pipe(
+      // TODO this throws an error for some reason, but it works for now
+      catchError(
+        this.handleError<any>(
+          `getTablesByDateAndTime` +
+            '?rest_id=' +
+            payload.rest_id +
+            '&date=' +
+            payload.date +
+            '&time=' +
+            payload.time
+        )
+      )
+    );
+  }
+
   getTableStatus(date: Date): Observable<any> {
     const url = baseURL + '/tische_datum_uhrzeit_personal.php';
     const rest_id = 1;
-    const today =
-      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-    const time =
-      date.getHours() +
-      ':' +
-      (date.getMinutes() < 10 ? date.getMinutes() : '0' + date.getMinutes());
-
-    const tdate = formatDate(date, 'yyyy-MM-dd', 'en_US');
-    const ttime = formatDate(date, 'HH:mm:ss', 'en_US');
+    const dateDay = formatDate(date, 'yyyy-MM-dd', 'en_US');
+    const dateTime = formatDate(date, 'HH:mm:ss', 'en_US');
 
     const data = {
       rest_id: rest_id,
-      date: tdate,
-      time: ttime
+      date: dateDay,
+      time: dateTime
     };
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'

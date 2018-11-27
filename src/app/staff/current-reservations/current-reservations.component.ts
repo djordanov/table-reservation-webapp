@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { formatDate } from '@angular/common';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { FormBuilder, Validators } from '@angular/forms';
+
 import { Table } from 'src/app/data-models/Table';
 import { TableService } from 'src/app/services/table.service';
-
+import { CancelModalComponent } from '../../cancel-modal/cancel-modal.component';
 import { parseTablesResponse } from '../../Utils';
-import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-current-reservations',
@@ -14,11 +16,15 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class StaffCurrentReservationsComponent implements OnInit {
   form = this.fb.group({
     date: formatDate(new Date(), 'yyyy-MM-dd', 'en_US'),
-    time: formatDate(new Date(), 'mm:HH:ss', 'en_US')
+    time: formatDate(new Date(), 'HH:mm:ss', 'en_US')
   });
   tables: Table[];
 
-  constructor(private tableService: TableService, private fb: FormBuilder) {}
+  constructor(
+    private tableService: TableService,
+    private fb: FormBuilder,
+    public modal: Modal
+  ) {}
 
   ngOnInit() {
     this.fetchReservations();
@@ -26,6 +32,16 @@ export class StaffCurrentReservationsComponent implements OnInit {
 
   onSubmit() {
     this.fetchReservations();
+  }
+
+  onClickMe() {
+    console.log('onClickMe');
+    const dialogRef = this.modal.open(CancelModalComponent);
+  }
+
+  onClickDelete() {
+    console.log('In onClickDelete');
+    const dialogRef = this.modal.open(CancelModalComponent);
   }
 
   fetchReservations() {
