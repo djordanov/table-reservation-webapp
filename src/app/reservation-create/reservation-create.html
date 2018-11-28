@@ -8,7 +8,7 @@
 <div *ngIf="!isReservationRequestSend">
     <div class="row">
         <div class="col-md-7 ml-2">
-            <app-tables [tableData]="tables?.table" (tableClicked)="onTableClicked($event)"></app-tables>
+            <app-tables [tableData]="tables?.table" (tableClicked)="onTableClicked($event)" [isClickable]="true"></app-tables>
         </div>
         
         <div class="col-md-4 ml-2 mr-2" *ngIf="!isDateAndTimeSet">
