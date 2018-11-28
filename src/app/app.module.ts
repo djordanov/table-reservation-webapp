@@ -24,6 +24,8 @@ import { ReservationCreateResponseComponent } from './reservation-create-respons
 import { HeaderComponent } from './templates/header/header.component';
 import { CancelModalComponent } from './cancel-modal/cancel-modal.component';
 import { StaffBookingPlanComponent } from './staff/staff-booking-plan/staff-booking-plan.component';
+import { LoginComponent } from './login/login.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -38,13 +40,15 @@ import { StaffBookingPlanComponent } from './staff/staff-booking-plan/staff-book
     ReservationCreateResponseComponent,
     HeaderComponent,
     CancelModalComponent,
-    StaffBookingPlanComponent
+    StaffBookingPlanComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
+    NgbModule.forRoot(),
     BootstrapModalModule,
     FormsModule,
     ReactiveFormsModule,

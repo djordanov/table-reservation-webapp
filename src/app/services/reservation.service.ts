@@ -5,7 +5,6 @@ import { catchError, map } from 'rxjs/operators';
 import { CreateReservation } from '../data-models/Reservation';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseURL } from '../Config.js';
-import { WeekDay } from '@angular/common';
 import { Weekday } from '../data-models/Restaurant';
 
 @Injectable({
