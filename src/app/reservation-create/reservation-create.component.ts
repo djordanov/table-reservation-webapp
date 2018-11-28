@@ -43,6 +43,7 @@ export class ReservationCreateComponent implements OnInit {
     for (let i = 0; i < 24; i++) {
       this.hours.push(this.addZero(i));
     }
+    this.reservationService.getOpeningHours('1').subscribe(res => console.log(res));
   }
 
   addZero(i): string {
