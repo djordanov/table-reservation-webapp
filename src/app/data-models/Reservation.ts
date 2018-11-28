@@ -22,7 +22,8 @@ export class CreateReservation {
   email: String;
   numberOfPersons: number;
   date: Date;
-  time: String;
+  hour?: String;
+  minute?: String;
 }
 
 export class CreateReservationResponse {

@@ -27,8 +27,13 @@ export class ReservationService {
     );
   }
 
-  createReservation(body: CreateReservation): Observable<any> {
+  createReservation(payload: CreateReservation): Observable<any> {
     const url = baseURL + '/reservierung_anlegen.php';
+    const body = {
+      rest_id: payload.rest_id, tableID: payload.tableID, firstName: payload.firstName,
+      lastName: payload.lastName, telephoneNumber: payload.telephoneNumber, email: payload.email,
+      numberOfPersons: payload.numberOfPersons, date: payload.date, time: payload.hour + ':' + payload.minute,
+    };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, body, { headers }).pipe(
       // TODO this throws an error for some reason, but it works for now
