@@ -1,16 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { CreateReservation } from '../data-models/Reservation';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseURL } from '../Config.js';
+import { WeekDay } from '@angular/common';
+import { Weekday } from '../data-models/Restaurant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
   constructor(private http: HttpClient) {}
+
+  getOpeningHours(id: String): Observable<Weekday[]> {
+    const url = baseURL + '/opening_hours.php?res_id=' + id;
+    return this.http.get<any>(url).pipe(
+      map(response => response.weekdays),
+      catchError(this.handleError<any>(`opening_hours.php?res_id=${id}`, null))
+    );
+  }
 
   getReservation(id: String): Observable<any> {
     const url = baseURL + '/reservierung_einsehen.php?reser_id=' + id;
@@ -27,8 +37,13 @@ export class ReservationService {
     );
   }
 
-  createReservation(body: CreateReservation): Observable<any> {
+  createReservation(payload: CreateReservation): Observable<any> {
     const url = baseURL + '/reservierung_anlegen.php';
+    const body = {
+      rest_id: payload.rest_id, tableID: payload.tableID, firstName: payload.firstName,
+      lastName: payload.lastName, telephoneNumber: payload.telephoneNumber, email: payload.email,
+      numberOfPersons: payload.numberOfPersons, date: payload.date, time: payload.hour + ':' + payload.minute,
+    };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, body, { headers }).pipe(
       // TODO this throws an error for some reason, but it works for now

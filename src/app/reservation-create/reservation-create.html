@@ -8,7 +8,7 @@
 <div *ngIf="!isReservationRequestSend">
     <div class="row">
         <div class="col-md-7 ml-2">
-            <app-tables [tableData]="tables?.table" (tableClicked)="onTableClicked($event)"></app-tables>
+            <app-tables [tableData]="tables?.table" (tableClicked)="onTableClicked($event)" [isClickable]="true"></app-tables>
         </div>
         
         <div class="col-md-4 ml-2 mr-2" *ngIf="!isDateAndTimeSet">
@@ -20,10 +20,17 @@
                 </div>
             </div>
             <div class="form-group row mt-3 col-md-9">
-                <input type="time" class="form-control ml- form-control col-md-9" id="time" placeholder="von" required="true" [(ngModel)] = "reservation.time" #time="ngModel">
-                <div *ngIf="time.invalid && (time.dirty || time.touched)" class="alert alert-danger col-md-9">
-                        Bitte geben Sie eine gültige Zeit ein!
-                </div>
+                <select class="form-control col-md-2 selectpicker" data-live-search="true" id="hour" [(ngModel)] = "reservation.hour">
+                    <option *ngFor='let hour of hours' [value]="hour">
+                        {{hour}}
+                    </option>
+                </select>
+                <span class="ml-2 mr-2">{{':'}}</span>
+                <select class="form-control col-md-2 selectpicker" data-live-search="true" id="minute" [(ngModel)] = "reservation.minute">
+                    <option *ngFor='let minute of minutes' [value]="minute">
+                        {{minute}}
+                    </option>
+                </select>
                 <label for="sel1" class="ml-2">Uhrzeit</label>
             </div>
             <button class="btn btn-primary btn-block container-fluid" (click)="setDateAndTime()">
@@ -33,17 +40,29 @@
         <div class="col-md-4" *ngIf="isDateAndTimeSet">
             <h4> Wählen Sie nun auf der linken Seite einen Tisch aus und tragen Sie weiter Daten ein.</h4>
             <div class = "row mt-4 mb-4" *ngIf="!isDateOnEdit">
-                <h5 class="col-md-8">Reservierung für den {{reservation.date}} um {{reservation.time}}</h5>
+                <h5 class="col-md-8">Reservierung für den {{reservation?.date}} um {{reservation?.hour}}:{{reservation?.minute}}</h5>
                 <button class="btn btn-outline-primary col-md-2" (click)="onDateEditClick()">Ändern</button>
             </div>
             <div class="row mt-4 mb-4" *ngIf="isDateOnEdit">
                 <div class="col-md-9">
                     <div class="form-group row">
-                        <input type="date" class="col-md-8 form-control ml-" id="editDate" [(ngModel)] = "reservationTime.date">
+                        <input type="date" class="col-md-6 form-control ml-" id="editDate" [(ngModel)] = "reservationTime.date">
                         <label for="sel1" class="ml-2">Datum</label>
                     </div>
                     <div class="form-group row">
-                        <input type="time" class="col-md-8 form-control ml-" id="editTime" [(ngModel)] = "reservationTime.time">
+                        <div class="col-md-6 row ml-">
+                            <select class="form-control col-md-5 selectpicker" data-live-search="true" id="hour" [(ngModel)] = "reservationTime.hour">
+                                <option *ngFor='let hour of hours' [value]="hour">
+                                    {{hour}}
+                                </option>
+                            </select>
+                            <span class="ml-2 mr-2">{{':'}}</span>
+                            <select class="form-control col-md-5 selectpicker" data-live-search="true" id="minute" [(ngModel)] = "reservationTime.minute">
+                                <option *ngFor='let minute of minutes' [value]="minute">
+                                    {{minute}}
+                                </option>
+                            </select>
+                        </div>
                         <label for="sel1" class="ml-2">Uhrzeit</label>
                     </div>
                 </div>
