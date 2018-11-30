@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
 
 import { Table } from '../../data-models/Table';
 import { TableService } from '../../services/table.service';
@@ -15,7 +16,12 @@ export class StaffBookingPlanComponent implements OnInit {
   constructor(private tableService: TableService) {}
 
   ngOnInit() {
-    this.tableService.getTables()
+    const body = {
+      rest_id: 1,
+      date: new Date(),
+      time: formatDate(new Date(), 'HH:mm', 'en_US')
+    };
+    this.tableService.getTablesByDateAndTime(body)
     .subscribe(tables => {
       this.tables = tables;
     });
