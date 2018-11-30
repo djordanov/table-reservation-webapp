@@ -6,7 +6,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationService } from '../services/reservation.service';
 
 import { parseReservationResponse } from '../Utils';
-import { Reservation } from '../data-models/Reservation';
 import { CancelModalComponent } from '../cancel-modal/cancel-modal.component';
 
 @Component({

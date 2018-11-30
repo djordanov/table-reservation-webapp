@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { formatDate } from '@angular/common';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Table } from 'src/app/data-models/Table';
 import { TableService } from 'src/app/services/table.service';
@@ -23,7 +23,7 @@ export class StaffCurrentReservationsComponent implements OnInit {
   constructor(
     private tableService: TableService,
     private fb: FormBuilder,
-    public modal: Modal
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -34,14 +34,10 @@ export class StaffCurrentReservationsComponent implements OnInit {
     this.fetchReservations();
   }
 
-  onClickMe() {
-    console.log('onClickMe');
-    const dialogRef = this.modal.open(CancelModalComponent);
-  }
-
-  onClickDelete() {
-    console.log('In onClickDelete');
-    const dialogRef = this.modal.open(CancelModalComponent);
+  onClickDelete(reservation, table) {
+    const modalRef = this.modalService.open(CancelModalComponent);
+    reservation.table = table;
+    modalRef.componentInstance.reservation = reservation;
   }
 
   fetchReservations() {
