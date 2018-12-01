@@ -6,7 +6,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationService } from '../services/reservation.service';
 
 import { parseReservationResponse } from '../Utils';
-import { Reservation } from '../data-models/Reservation';
 import { CancelModalComponent } from '../cancel-modal/cancel-modal.component';
 
 @Component({
@@ -17,7 +16,6 @@ import { CancelModalComponent } from '../cancel-modal/cancel-modal.component';
 export class ReservationDeleteComponent {
   error: Error;
   openConfirm: boolean;
-  reservation: Reservation;
   form = this.fb.group({
     reservationNumber: ['Reservierungsnummer', Validators.required]
   });
@@ -29,19 +27,20 @@ export class ReservationDeleteComponent {
   ) {}
 
   onSubmit(): void {
-    const modalRef = this.modalService.open(CancelModalComponent);
-    modalRef.componentInstance.name = 'World';
-
-    // this.onCancel(this.form.get('reservationNumber').value);
+    this.onCancel(this.form.get('reservationNumber').value);
   }
 
+  /**
+   * fetch reservation and open reservation cancellation modal
+   */
   onCancel(reservationNumber: String): void {
     this.reservationService
       .getReservation(reservationNumber)
       .subscribe(reservationResponse => {
         try {
-          this.reservation = parseReservationResponse(reservationResponse);
-          this.openConfirm = true;
+          const reservation = parseReservationResponse(reservationResponse);
+          const modalRef = this.modalService.open(CancelModalComponent);
+          modalRef.componentInstance.reservation = reservation;
         } catch (err) {
           this.error = err;
         }

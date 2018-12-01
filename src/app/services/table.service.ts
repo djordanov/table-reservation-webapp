@@ -29,12 +29,19 @@ export class TableService {
   getTablesByDateAndTime(
     payload: TableReservedRequestPayload
   ): Observable<any> {
+    let formattedDate;
+    if (payload.date instanceof Date) {
+      formattedDate = formatDate(payload.date, 'yyyy-MM-dd', 'en_US');
+    } else {
+      formattedDate = payload.date;
+    }
+
     const url =
       baseURL +
       '/tische_datum_uhrzeit.php?rest_id=' +
       payload.rest_id +
       '&date=' +
-      payload.date +
+      formattedDate +
       '&time=' +
       payload.time;
     return this.http.get(url).pipe(

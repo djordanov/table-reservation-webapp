@@ -18,6 +18,10 @@ export class CancelModalComponent implements OnInit {
   ngOnInit() {}
 
   onConfirm() {
+    // close modal
+    this.activeModal.close('Close click');
+
+    // and actually delete reservation
     this.reservationService
       .delete(this.reservation.res_pid)
       .subscribe(deleteResponse => {

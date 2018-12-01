@@ -33,7 +33,7 @@
         <td>{{ reservation.number_of_person }}</td>
         <td>{{ reservation.person.name }}</td>
         <td>
-          <button class="btn btn-primary">Stornieren</button>
+          <div class="btn btn-primary" (click)="onClickDelete(reservation, table)">Stornieren</div>
         </td>
       </tr>
     </div>

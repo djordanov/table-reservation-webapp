@@ -10,7 +10,7 @@ export class Reservation {
   created_at: Date;
   res_day: Date;
   res_time: Date;
-  timeduration_min: number;
+  timeduration: number;
   number_of_person: number;
 }
 
