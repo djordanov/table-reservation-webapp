@@ -14,11 +14,16 @@ import { parseTablesResponse } from '../../Utils';
   styleUrls: ['./current-reservations.component.css']
 })
 export class StaffCurrentReservationsComponent implements OnInit {
-  form = this.fb.group({
+
+  formDate = this.fb.group({
     date: formatDate(new Date(), 'yyyy-MM-dd', 'en_US'),
-    time: formatDate(new Date(), 'HH:mm:ss', 'en_US')
+    time: formatDate(new Date(), 'HH:mm', 'en_US')
   });
-  reservations: Reservation[];
+  formQuery = this.fb.group({
+    query: ''
+  });
+  baseReservations: Reservation[];
+  filtRes: Reservation[];
 
   constructor(
     private tableService: TableService,
@@ -41,7 +46,7 @@ export class StaffCurrentReservationsComponent implements OnInit {
 
   fetchReservations() {
     const datestr =
-      this.form.get('date').value + 'T' + this.form.get('time').value;
+      this.formDate.get('date').value + 'T' + this.formDate.get('time').value;
     const date = new Date(datestr);
     this.tableService.getTableStatus(date).subscribe(response => {
       const tables = parseTablesResponse(response);
@@ -58,7 +63,60 @@ export class StaffCurrentReservationsComponent implements OnInit {
           }
         }
       }
-      this.reservations = reservations;
+      this.baseReservations = reservations;
+      this.filtRes = reservations;
     });
+  }
+
+  /**
+   * filter baseReservations based on search query
+   * filters progressively. That means that it first tries to filter by table nr.
+   * then if that doesn't return anything by number of persons
+   * ...name, date, time and reservationnumber
+   *
+   * This could probably be done in a better way, but oh well
+   */
+  filterReservations() {
+
+    // basically a massive if else ...
+    const q = this.formQuery.get('query').value;
+
+    if (q === '') {
+      this.filtRes = this.baseReservations;
+      return;
+    }
+    // table id
+    this.filtRes = this.baseReservations.filter(res =>
+      res.table.table_id.includes(q));
+    if (this.filtRes && this.filtRes.length > 0) {
+      return;
+    }
+    // number of persons
+    this.filtRes = this.baseReservations.filter(res =>
+      res.number_of_person.toString().includes(q));
+    if (this.filtRes && this.filtRes.length > 0) {
+      return;
+    }
+    // name
+    this.filtRes = this.baseReservations.filter(res =>
+      res.person.name.includes(q));
+    if (this.filtRes && this.filtRes.length > 0) {
+      return;
+    }
+    // date is redundant, since we only ever show today
+    // time
+    this.filtRes = this.baseReservations.filter(res =>
+      res.res_time.toString().includes(q));
+    if (this.filtRes && this.filtRes.length > 0) {
+      return;
+    }
+    // reservationnumber
+    this.filtRes = this.baseReservations.filter(res =>
+      res.res_pid.includes(q));
+    if (this.filtRes && this.filtRes.length > 0) {
+      return;
+    }
+    // nothing found
+    this.filtRes = [];
   }
 }

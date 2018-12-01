@@ -1,11 +1,15 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <input type=" date" formControlName="date" required>
-  <div *ngIf="form.get('date').invalid && (form.get('date').dirty || form.get('date').touched)"
+<form [formGroup]="formQuery" (ngSubmit)="filterReservations()">
+    <input type="text" formControlName="query">
+</form>
+
+<form [formGroup]="formDate" (ngSubmit)="onSubmit()">
+  <input type="date" formControlName="date" required>
+  <div *ngIf="formDate.get('date').invalid && (formDate.get('date').dirty || formDate.get('date').touched)"
     class="alert alert-danger">
     Bitte geben Sie ein gültiges Datum ein!
   </div>
   <input type="time" formControlName="time" required>
-  <div *ngIf="form.get('time').invalid && (form.get('time').dirty || form.get('time').touched)"
+  <div *ngIf="formDate.get('time').invalid && (formDate.get('time').dirty || formDate.get('time').touched)"
     class="alert alert-danger">
     Bitte geben Sie eine gültige Zeit ein!
   </div>
@@ -16,24 +20,26 @@
       <thead>
         <tr>
           <td>Tischnummer</td>
-          <td>Reservierungsnummer</td>
+          <td>Personen</td>
+          <td>Reserviert von</td>
           <td>Datum</td>
           <td>Uhrzeit</td>
-          <td>Anzahl an Personen</td>
-          <td>Reserviert von</td>
+          <td>Reservierungsnr.</td>
           <td>Stornieren</td>
+          <td>Bezahlt?</td>
         </tr>
       </thead>
-      <tr *ngFor="let reservation of reservations">
+      <tr *ngFor="let reservation of filtRes">
         <td>{{ reservation.table.table_id }}</td>
-        <td>{{ reservation.res_pid }}</td>
-        <td>{{ reservation.res_day }}</td>
-        <td>{{ reservation.res_time }}</td>
         <td>{{ reservation.number_of_person }}</td>
         <td>{{ reservation.person.name }}</td>
+        <td>{{ reservation.res_day }}</td>
+        <td>{{ reservation.res_time }}</td>
+        <td>{{ reservation.res_pid }}</td>
         <td>
-          <div class="btn btn-primary" (click)="onClickDelete(reservation)">Stornieren</div>
+          <div class="btn btn-default" (click)="onClickDelete(reservation)">Stornieren</div>
         </td>
+        <td>TODO</td>
       </tr>
   </table>
 </div>
