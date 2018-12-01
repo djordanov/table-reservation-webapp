@@ -3,7 +3,7 @@ import { formatDate } from '@angular/common';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Table } from 'src/app/data-models/Table';
+import { Reservation } from 'src/app/data-models/Reservation';
 import { TableService } from 'src/app/services/table.service';
 import { CancelModalComponent } from '../../cancel-modal/cancel-modal.component';
 import { parseTablesResponse } from '../../Utils';
@@ -18,7 +18,7 @@ export class StaffCurrentReservationsComponent implements OnInit {
     date: formatDate(new Date(), 'yyyy-MM-dd', 'en_US'),
     time: formatDate(new Date(), 'HH:mm:ss', 'en_US')
   });
-  tables: Table[];
+  reservations: Reservation[];
 
   constructor(
     private tableService: TableService,
@@ -34,9 +34,8 @@ export class StaffCurrentReservationsComponent implements OnInit {
     this.fetchReservations();
   }
 
-  onClickDelete(reservation, table) {
+  onClickDelete(reservation) {
     const modalRef = this.modalService.open(CancelModalComponent);
-    reservation.table = table;
     modalRef.componentInstance.reservation = reservation;
   }
 
@@ -46,7 +45,20 @@ export class StaffCurrentReservationsComponent implements OnInit {
     const date = new Date(datestr);
     this.tableService.getTableStatus(date).subscribe(response => {
       const tables = parseTablesResponse(response);
-      this.tables = tables.filter(table => table.res);
+      const occTables = tables.filter(table => table.res);
+
+      // get all reservations from tables
+      const reservations = [];
+      for (const table of occTables) {
+        const arrRes = table.res;
+        if (arrRes) {
+          for (const res of arrRes) {
+            res.table = table;
+            reservations.push(res);
+          }
+        }
+      }
+      this.reservations = reservations;
     });
   }
 }

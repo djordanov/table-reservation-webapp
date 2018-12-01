@@ -11,31 +11,29 @@
   </div>
 </form>
 
-<div class="table-responsive">
+<div class="table-responsive table-bordered table-striped">
   <table class="table">
-    <div>
-      <tr>
-        <td>Tischnummer</td>
-        <td>Reservierungsnummer</td>
-        <td>Datum</td>
-        <td>Uhrzeit</td>
-        <td>Anzahl an Personen</td>
-        <td>Reserviert von</td>
-        <td>Stornieren</td>
-      </tr>
-    </div>
-    <div *ngFor="let table of tables">
-      <tr *ngFor="let reservation of table.res">
-        <td>{{ table.table_id }}</td>
+      <thead>
+        <tr>
+          <td>Tischnummer</td>
+          <td>Reservierungsnummer</td>
+          <td>Datum</td>
+          <td>Uhrzeit</td>
+          <td>Anzahl an Personen</td>
+          <td>Reserviert von</td>
+          <td>Stornieren</td>
+        </tr>
+      </thead>
+      <tr *ngFor="let reservation of reservations">
+        <td>{{ reservation.table.table_id }}</td>
         <td>{{ reservation.res_pid }}</td>
         <td>{{ reservation.res_day }}</td>
         <td>{{ reservation.res_time }}</td>
         <td>{{ reservation.number_of_person }}</td>
         <td>{{ reservation.person.name }}</td>
         <td>
-          <div class="btn btn-primary" (click)="onClickDelete(reservation, table)">Stornieren</div>
+          <div class="btn btn-primary" (click)="onClickDelete(reservation)">Stornieren</div>
         </td>
       </tr>
-    </div>
   </table>
 </div>
