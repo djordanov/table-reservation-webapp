@@ -11,22 +11,25 @@
             <app-tables [tableData]="tables?.table" (tableClicked)="onTableClicked($event)" [isClickable]="true"></app-tables>
         </div>
         
-        <div class="col-md-4 ml-2 mr-2" *ngIf="!isDateAndTimeSet">
+        <div class="col-md-4 ml-2 mr-2" *ngIf="!isDateAndTimeSet">                
             <h4> Wählen Sie zunächst Datum und Uhrzeit der Reservierung aus.</h4>
             <div class="row mt-3 col-md-9">
-                <input type="date" class="form-control ml- form-control col-md-9" id="date" required="true" [(ngModel)] = "reservation.date" #date="ngModel">
-                <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger col-md-9">
-                        Bitte geben Sie ein gültiges Datum ein!
+                <div class="input-group">
+                    <input class="form-control" placeholder="dd-mm-yyyy"
+                            name="dp" [(ngModel)]="reservation.date" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" [maxDate]="maxDate" [markDisabled]="isDisabled">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                    </div>
                 </div>
             </div>
             <div class="form-group row mt-3 col-md-9">
-                <select class="form-control col-md-2 selectpicker" data-live-search="true" id="hour" [(ngModel)] = "reservation.hour">
+                <select class="form-control col-md-3 selectpicker" data-live-search="true" id="hour" [(ngModel)] = "reservation.hour">
                     <option *ngFor='let hour of hours' [value]="hour">
                         {{hour}}
                     </option>
                 </select>
                 <span class="ml-2 mr-2">{{':'}}</span>
-                <select class="form-control col-md-2 selectpicker" data-live-search="true" id="minute" [(ngModel)] = "reservation.minute">
+                <select class="form-control col-md-3 selectpicker" data-live-search="true" id="minute" [(ngModel)] = "reservation.minute">
                     <option *ngFor='let minute of minutes' [value]="minute">
                         {{minute}}
                     </option>
@@ -40,14 +43,19 @@
         <div class="col-md-4" *ngIf="isDateAndTimeSet">
             <h4> Wählen Sie nun auf der linken Seite einen Tisch aus und tragen Sie weiter Daten ein.</h4>
             <div class = "row mt-4 mb-4" *ngIf="!isDateOnEdit">
-                <h5 class="col-md-8">Reservierung für den {{reservation?.date}} um {{reservation?.hour}}:{{reservation?.minute}}</h5>
+                <h5 class="col-md-8">Reservierung für den {{addZero(reservation?.date.day)}}-{{addZero(reservation?.date.month)}}-{{reservation?.date.year}} um {{reservation?.hour}}:{{reservation?.minute}}</h5>
                 <button class="btn btn-outline-primary col-md-2" (click)="onDateEditClick()">Ändern</button>
             </div>
             <div class="row mt-4 mb-4" *ngIf="isDateOnEdit">
                 <div class="col-md-9">
                     <div class="form-group row">
-                        <input type="date" class="col-md-6 form-control ml-" id="editDate" [(ngModel)] = "reservationTime.date">
-                        <label for="sel1" class="ml-2">Datum</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="dd-mm-yyyy"
+                                    name="dp" [(ngModel)]="reservationTime.date" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" [maxDate]="maxDate" [markDisabled]="isDisabled">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6 row ml-">

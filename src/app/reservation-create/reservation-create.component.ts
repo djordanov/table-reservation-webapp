@@ -4,6 +4,8 @@ import { ReservationService } from '../services/reservation.service';
 import { TableService } from '../services/table.service';
 import { CreateReservation, CreateReservationResponse } from '../data-models/Reservation';
 import { Observable, of } from 'rxjs';
+import { NgbDateStruct, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { Week } from '../data-models/Restaurant';
 
 @Component({
   selector: 'app-reservation-create',
@@ -16,10 +18,11 @@ export class ReservationCreateComponent implements OnInit {
   isDateOnEdit = false;
   isReservationRequestSend = false;
 
-  today = new Date();
-  formattedToday = this.today.getDate() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getFullYear();
+  date = new Date();
+  minDate: NgbDateStruct = {year: this.date.getFullYear(), month: this.date.getMonth() + 1, day: this.date.getDate()};
+  maxDate: NgbDateStruct = {year: this.date.getFullYear() + 1, month: this.date.getMonth() + 1, day: this.date.getDate()};
 
-  reservationTime: { date: Date, hour: String; minute: String } = { date: undefined, hour: '', minute: '' };
+  reservationTime: { date: NgbDate, hour: String; minute: String } = { date: undefined, hour: '', minute: '' };
 
   hours: string[] = [];
   minutes: string[] = ['00', '15', '30', '45'];
@@ -29,6 +32,8 @@ export class ReservationCreateComponent implements OnInit {
     email: '', numberOfPersons: undefined, date: undefined,
     rest_id: 1, hour: '', minute: '',
   };
+
+  isDisabled;
 
   response$: Observable<CreateReservationResponse>;
 
@@ -43,7 +48,40 @@ export class ReservationCreateComponent implements OnInit {
     for (let i = 0; i < 24; i++) {
       this.hours.push(this.addZero(i));
     }
-    this.reservationService.getOpeningHours('1').subscribe(res => console.log(res));
+    this.reservationService.getOpeningHours('1').subscribe((week: Week) => {
+      const closedDays = this.getClosedDays(week);
+
+      this.isDisabled = (date: NgbDate, current: {month: number}) => {
+        const day = this.getDate(date);
+        let isClosed = false;
+        closedDays.map(closedDay => {
+          if (day.getDay() === closedDay && !isClosed) {
+            isClosed = true;
+          }
+        });
+        return isClosed;
+      };
+    });
+  }
+
+  getClosedDays(week: Week): number[] {
+    const closedDays: number[] = [];
+    if (week.monday.ruhetag) {
+      closedDays.push(1);
+    } else if (week.tuesday.ruhetag) {
+      closedDays.push(2);
+    } else if (week.wednesday.ruhetag) {
+      closedDays.push(3);
+    } else if (week.thursday.ruhetag) {
+      closedDays.push(4);
+    } else if (week.friday.ruhetag) {
+      closedDays.push(5);
+    } else if (week.saturday.ruhetag) {
+      closedDays.push(6);
+    } else if (week.sunday.ruhetag) {
+      closedDays.push(0);
+    }
+    return closedDays;
   }
 
   addZero(i): string {
@@ -74,7 +112,7 @@ export class ReservationCreateComponent implements OnInit {
       this.reservationTime.minute = this.reservation.minute;
       this.tables$ = this.tableService.getTablesByDateAndTime({
         rest_id: 1,
-        date: this.reservation.date,
+        date: this.reservation.date.year + '-' + this.addZero(this.reservation.date.month) + '-' + this.addZero(this.reservation.date.day),
         time: this.reservation.hour + ':' + this.reservation.minute,
       });
     }
@@ -96,9 +134,17 @@ export class ReservationCreateComponent implements OnInit {
       this.isDateOnEdit = false;
       this.tables$ = this.tableService.getTablesByDateAndTime({
         rest_id: 1,
-        date: this.reservation.date,
+        date: this.reservation.date.year + '-' + this.addZero(this.reservation.date.month) + '-' + this.addZero(this.reservation.date.day),
         time: this.reservation.hour + ':' + this.reservation.minute,
       });
     }
+  }
+
+  getDate(day: NgbDate): Date {
+    const date = new Date();
+    date.setDate(day.day);
+    date.setMonth(day.month - 1);
+    date.setFullYear(day.year);
+    return date;
   }
 }

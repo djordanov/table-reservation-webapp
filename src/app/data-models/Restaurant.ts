@@ -4,3 +4,13 @@ export class Weekday {
     open: string;
     close: string;
 }
+
+export class Week {
+    monday: Weekday;
+    tuesday: Weekday;
+    wednesday: Weekday;
+    thursday: Weekday;
+    friday: Weekday;
+    saturday: Weekday;
+    sunday: Weekday;
+}
