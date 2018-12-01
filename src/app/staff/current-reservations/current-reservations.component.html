@@ -1,5 +1,5 @@
 <form [formGroup]="formQuery" (ngSubmit)="filterReservations()">
-    <input type="text" formControlName="query">
+  <input type="text" formControlName="query">
 </form>
 
 <form [formGroup]="formDate" (ngSubmit)="onSubmit()">
@@ -15,31 +15,35 @@
   </div>
 </form>
 
+<button class="btn btn-info" (click)="jumpCurrent()">Kunden aktuell</button>
+
 <div class="table-responsive table-bordered table-striped">
   <table class="table">
-      <thead>
-        <tr>
-          <td>Tischnummer</td>
-          <td>Personen</td>
-          <td>Reserviert von</td>
-          <td>Datum</td>
-          <td>Uhrzeit</td>
-          <td>Reservierungsnr.</td>
-          <td>Stornieren</td>
-          <td>Bezahlt?</td>
-        </tr>
-      </thead>
-      <tr *ngFor="let reservation of filtRes">
-        <td>{{ reservation.table.table_id }}</td>
-        <td>{{ reservation.number_of_person }}</td>
-        <td>{{ reservation.person.name }}</td>
-        <td>{{ reservation.res_day }}</td>
-        <td>{{ reservation.res_time }}</td>
-        <td>{{ reservation.res_pid }}</td>
-        <td>
-          <div class="btn btn-default" (click)="onClickDelete(reservation)">Stornieren</div>
-        </td>
-        <td>TODO</td>
+    <thead>
+      <tr>
+        <td>Reserviert von</td>
+        <td>Tisch-Nr.</td>
+        <td>Personen</td>
+        <td>Reservierungsnr.</td>
+        <td>Datum</td>
+        <td>Uhrzeit</td>
+        <td>Stornieren</td>
+        <td>Angekommen?</td>
       </tr>
+    </thead>
+    <tr *ngFor="let reservation of filtRes">
+      <td>{{ reservation.person.name }}</td>
+      <td>{{ reservation.table.table_id }}</td>
+      <td>{{ reservation.number_of_person }}</td>
+      <td>{{ reservation.res_pid }}</td>
+      <td>{{ reservation.res_day }}</td>
+      <td>{{ reservation.res_time }}</td>
+      <td>
+        <button class="btn btn-info" (click)="deleteRes(reservation)">Stornieren</button>
+      </td>
+      <td>TODO</td>
+    </tr>
   </table>
 </div>
+
+<button class="btn btn-info" (click)="jumpNextHour()">Kunden nächste Stunde</button>

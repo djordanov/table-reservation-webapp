@@ -14,7 +14,6 @@ import { parseTablesResponse } from '../../Utils';
   styleUrls: ['./current-reservations.component.css']
 })
 export class StaffCurrentReservationsComponent implements OnInit {
-
   formDate = this.fb.group({
     date: formatDate(new Date(), 'yyyy-MM-dd', 'en_US'),
     time: formatDate(new Date(), 'HH:mm', 'en_US')
@@ -37,11 +36,36 @@ export class StaffCurrentReservationsComponent implements OnInit {
 
   onSubmit() {
     this.fetchReservations();
+    this.formQuery.get('query').setValue('');
   }
 
-  onClickDelete(reservation) {
+  deleteRes(reservation) {
     const modalRef = this.modalService.open(CancelModalComponent);
     modalRef.componentInstance.reservation = reservation;
+  }
+
+  jumpCurrent() {
+    this.formDate
+      .get('date')
+      .setValue(formatDate(new Date(), 'yyyy-MM-dd', 'en_US'));
+    this.formDate
+      .get('time')
+      .setValue(formatDate(new Date(), 'HH:mm', 'en_US'));
+    this.formQuery.get('query').setValue('');
+
+    this.fetchReservations();
+  }
+
+  jumpNextHour() {
+    const nextHour = new Date(new Date().getTime() + 1000 * 60 * 60);
+
+    this.formDate
+      .get('date')
+      .setValue(formatDate(nextHour, 'yyyy-MM-dd', 'en_US'));
+    this.formDate.get('time').setValue(formatDate(nextHour, 'HH:mm', 'en_US'));
+    this.formQuery.get('query').setValue('');
+
+    this.fetchReservations();
   }
 
   fetchReservations() {
@@ -77,7 +101,6 @@ export class StaffCurrentReservationsComponent implements OnInit {
    * This could probably be done in a better way, but oh well
    */
   filterReservations() {
-
     // basically a massive if else ...
     const q = this.formQuery.get('query').value;
 
@@ -85,34 +108,37 @@ export class StaffCurrentReservationsComponent implements OnInit {
       this.filtRes = this.baseReservations;
       return;
     }
+    // name
+    this.filtRes = this.baseReservations.filter(res =>
+      res.person.name.includes(q)
+    );
+    if (this.filtRes && this.filtRes.length > 0) {
+      return;
+    }
     // table id
     this.filtRes = this.baseReservations.filter(res =>
-      res.table.table_id.includes(q));
+      res.table.table_id.includes(q)
+    );
     if (this.filtRes && this.filtRes.length > 0) {
       return;
     }
     // number of persons
     this.filtRes = this.baseReservations.filter(res =>
-      res.number_of_person.toString().includes(q));
+      res.number_of_person.toString().includes(q)
+    );
     if (this.filtRes && this.filtRes.length > 0) {
       return;
     }
-    // name
-    this.filtRes = this.baseReservations.filter(res =>
-      res.person.name.includes(q));
+    // reservationnumber
+    this.filtRes = this.baseReservations.filter(res => res.res_pid.includes(q));
     if (this.filtRes && this.filtRes.length > 0) {
       return;
     }
     // date is redundant, since we only ever show today
     // time
     this.filtRes = this.baseReservations.filter(res =>
-      res.res_time.toString().includes(q));
-    if (this.filtRes && this.filtRes.length > 0) {
-      return;
-    }
-    // reservationnumber
-    this.filtRes = this.baseReservations.filter(res =>
-      res.res_pid.includes(q));
+      res.res_time.toString().includes(q)
+    );
     if (this.filtRes && this.filtRes.length > 0) {
       return;
     }
