@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NotifierService } from 'angular-notifier';
 
 import { ReservationService } from '../services/reservation.service';
 import { Reservation } from '../data-models/Reservation';
@@ -12,8 +13,11 @@ import { Reservation } from '../data-models/Reservation';
 export class CancelModalComponent implements OnInit {
   @Input() reservation: Reservation;
   @Input() name: String;
-  constructor(private reservationService: ReservationService,
-    public activeModal: NgbActiveModal) {}
+  constructor(
+    private reservationService: ReservationService,
+    public activeModal: NgbActiveModal,
+    private notifierService: NotifierService
+  ) {}
 
   ngOnInit() {}
 
@@ -26,9 +30,12 @@ export class CancelModalComponent implements OnInit {
       .delete(this.reservation.res_pid)
       .subscribe(deleteResponse => {
         if (deleteResponse.result) {
-          alert('Reservation storniert!');
+          this.notifierService.notify(
+            'success',
+            'Reservierung wurde storniert!'
+          );
         } else {
-          alert(deleteResponse.text);
+          this.notifierService.notify('warning', deleteResponse.text);
         }
       });
   }
