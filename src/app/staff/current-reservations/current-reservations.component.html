@@ -1,22 +1,45 @@
-<form [formGroup]="formQuery" (ngSubmit)="filterReservations()">
-  <input type="text" formControlName="query">
-</form>
+<!-- Input fields/ buttons... -->
+<div class="row m-2">
 
-<form [formGroup]="formDate" (ngSubmit)="onSubmit()">
-  <input type="date" formControlName="date" required>
+  <!-- Search field -->
+  <div class="col-md-5">
+    <form [formGroup]="formQuery" (ngSubmit)="filterReservations()">
+      <input class="form-control" type="text" formControlName="query" placeholder="Suche">
+    </form>
+  </div>
+
+  <!-- Date Time Picker -->
+  <div class="col-md-5">
+    <form class="form-inline" [formGroup]="formDate" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <input type="date" class="m-1" formControlName="date" required>
+        <input type="time" class="m-1" formControlName="time" required>
+      </div>
+    </form>
+  </div>
+
+  <!-- Form Validation destroys formatting, but oh well -->
   <div *ngIf="formDate.get('date').invalid && (formDate.get('date').dirty || formDate.get('date').touched)"
     class="alert alert-danger">
     Bitte geben Sie ein gültiges Datum ein!
   </div>
-  <input type="time" formControlName="time" required>
   <div *ngIf="formDate.get('time').invalid && (formDate.get('time').dirty || formDate.get('time').touched)"
     class="alert alert-danger">
     Bitte geben Sie eine gültige Zeit ein!
   </div>
-</form>
 
-<button class="btn btn-info" (click)="jumpCurrent()">Kunden aktuell</button>
+  <!-- Go to current time button -->
+  <div class="col-md-2 float-right">
+    <button class="btn btn-info float-right" (click)="jumpCurrent()">
+      Kunden aktuell
+      <span class="p-1">
+        <fa-icon icon="caret-up"></fa-icon>
+      </span>
+    </button>
+  </div>
+</div>
 
+<!-- Aktual content (table) -->
 <div class="table-responsive table-bordered table-striped">
   <table class="table">
     <thead>
@@ -46,4 +69,13 @@
   </table>
 </div>
 
-<button class="btn btn-info" (click)="jumpNextHour()">Kunden nächste Stunde</button>
+<div class="row m-2">
+  <div class="col-md-12">
+    <button class="btn btn-info btn-block" (click)="jumpNextHour()">
+      Kunden nächste Stunde
+      <span class="p-1">
+        <fa-icon icon="caret-down"></fa-icon>
+      </span>
+    </button>
+  </div>
+</div>

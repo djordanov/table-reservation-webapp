@@ -5,11 +5,14 @@ import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NotifierModule } from 'angular-notifier';
-import { NotifierOptions } from 'angular-notifier';
+import { NotifierModule, NotifierOptions } from 'angular-notifier';
+
+// icons
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import { ReservationCreateComponent } from './reservation-create/reservation-create.component';
 import { ReservationDeleteComponent } from './reservation-delete/reservation-delete.component';
@@ -62,10 +65,16 @@ const notificationConfig: NotifierOptions = {
     HttpClientModule,
     CommonModule,
     NgbModule.forRoot(),
-    NotifierModule.withConfig(notificationConfig)
+    NotifierModule.withConfig(notificationConfig),
+    FontAwesomeModule
   ],
   entryComponents: [CancelModalComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    library.add(faCaretUp);
+    library.add(faCaretDown);
+  }
+}
