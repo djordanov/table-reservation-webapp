@@ -105,17 +105,15 @@ export class ReservationCreateComponent implements OnInit {
   }
 
   setDateAndTime() {
-    if (this.reservation.hour && this.reservation.minute && this.reservation.date) {
-      this.isDateAndTimeSet = true;
-      this.reservationTime.date = this.reservation.date;
-      this.reservationTime.hour = this.reservation.hour;
-      this.reservationTime.minute = this.reservation.minute;
-      this.tables$ = this.tableService.getTablesByDateAndTime({
-        rest_id: 1,
-        date: this.reservation.date.year + '-' + this.addZero(this.reservation.date.month) + '-' + this.addZero(this.reservation.date.day),
-        time: this.reservation.hour + ':' + this.reservation.minute,
-      });
-    }
+    this.isDateAndTimeSet = true;
+    this.reservationTime.date = this.reservation.date;
+    this.reservationTime.hour = this.reservation.hour;
+    this.reservationTime.minute = this.reservation.minute;
+    this.tables$ = this.tableService.getTablesByDateAndTime({
+      rest_id: 1,
+      date: this.reservation.date.year + '-' + this.addZero(this.reservation.date.month) + '-' + this.addZero(this.reservation.date.day),
+      time: this.reservation.hour + ':' + this.reservation.minute,
+    });
   }
 
   onDateEditClick() {
@@ -127,17 +125,15 @@ export class ReservationCreateComponent implements OnInit {
   }
 
   setNewDateAndTime() {
-    if (this.reservationTime.hour && this.reservation.minute && this.reservationTime.date) {
-      this.reservation.date = this.reservationTime.date;
-      this.reservation.hour = this.reservationTime.hour;
-      this.reservation.minute = this.reservationTime.minute;
-      this.isDateOnEdit = false;
-      this.tables$ = this.tableService.getTablesByDateAndTime({
-        rest_id: 1,
-        date: this.reservation.date.year + '-' + this.addZero(this.reservation.date.month) + '-' + this.addZero(this.reservation.date.day),
-        time: this.reservation.hour + ':' + this.reservation.minute,
-      });
-    }
+    this.reservation.date = this.reservationTime.date;
+    this.reservation.hour = this.reservationTime.hour;
+    this.reservation.minute = this.reservationTime.minute;
+    this.isDateOnEdit = false;
+    this.tables$ = this.tableService.getTablesByDateAndTime({
+      rest_id: 1,
+      date: this.reservation.date.year + '-' + this.addZero(this.reservation.date.month) + '-' + this.addZero(this.reservation.date.day),
+      time: this.reservation.hour + ':' + this.reservation.minute,
+    });
   }
 
   getDate(day: NgbDate): Date {
@@ -147,7 +143,24 @@ export class ReservationCreateComponent implements OnInit {
     date.setFullYear(day.year);
     return date;
   }
-  checkReservation(): boolean {
+
+  disableTimeButton(): boolean {
+    let isDisabled = true;
+    if (this.reservation.hour && this.reservation.minute && this.reservation.date) {
+        isDisabled = false;
+    }
+    return isDisabled;
+  }
+
+  disableEditTimeButton(): boolean {
+    let isDisabled = true;
+    if (this.reservationTime.hour && this.reservationTime.minute && this.reservationTime.date) {
+        isDisabled = false;
+    }
+    return isDisabled;
+  }
+
+  disableReservationButton(): boolean {
     let isDisabled = true;
     if (this.reservation.date && this.reservation.email && this.reservation.email.length !== 0 &&
       this.reservation.firstName && this.reservation.firstName.length !== 0 && this.reservation.hour &&

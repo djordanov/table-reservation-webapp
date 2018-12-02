@@ -36,7 +36,7 @@
                 </select>
                 <label for="sel1" class="ml-2">Uhrzeit</label>
             </div>
-            <button class="btn btn-primary btn-block container-fluid" (click)="setDateAndTime()">
+            <button class="btn btn-primary btn-block container-fluid" (click)="setDateAndTime()" [disabled]="disableTimeButton()">
                 Bestätigen
             </button>
         </div>
@@ -78,7 +78,7 @@
                     <button class="btn btn-outline-primary" (click)="backButtonClicked()">
                         Zurück
                     </button>
-                    <button class="btn btn-outline-primary mt-3" (click)="setNewDateAndTime()">
+                    <button class="btn btn-outline-primary mt-3" (click)="setNewDateAndTime()" [disabled]="disableEditTimeButton()">
                         Bestätigen
                     </button>
                 </div>
@@ -112,7 +112,7 @@
                 <label for="sel1" class="ml-2">Personen</label>
             </div>
             <div class="row">
-                <button class="btn btn-primary btn-block" (click)="createReservation()" [disabled]="checkReservation()">
+                <button class="btn btn-primary btn-block" (click)="createReservation()" [disabled]="disableReservationButton">
                     Reservieren
                 </button>
             </div>
