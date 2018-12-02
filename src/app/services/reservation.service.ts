@@ -5,7 +5,6 @@ import { catchError, map } from 'rxjs/operators';
 import { CreateReservation } from '../data-models/Reservation';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseURL } from '../Config.js';
-import { WeekDay } from '@angular/common';
 import { Week } from '../data-models/Restaurant';
 
 @Injectable({
@@ -31,20 +30,28 @@ export class ReservationService {
 
   delete(id: String): Observable<any> {
     const url = baseURL + '/reservierung_loeschen.php?reser_id=' + id;
-    return this.http.get<any>(url).pipe(
-      // TODO this throws an error for some reason, but it works for now
-      catchError(this.handleError<any>(`delete id=${id}`, null))
-    );
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>(`delete id=${id}`, null)));
   }
 
   createReservation(payload: CreateReservation): Observable<any> {
     const url = baseURL + '/reservierung_anlegen.php';
     const body = {
-      rest_id: payload.rest_id, tableID: payload.tableID, firstName: payload.firstName,
-      lastName: payload.lastName, telephoneNumber: payload.telephoneNumber, email: payload.email,
+      rest_id: payload.rest_id,
+      tableID: payload.tableID,
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      telephoneNumber: payload.telephoneNumber,
+      email: payload.email,
       numberOfPersons: payload.numberOfPersons,
-      date: payload.date.year + '-' + this.addZero(payload.date.month) + '-' + this.addZero(payload.date.day),
-      time: payload.hour + ':' + payload.minute,
+      date:
+        payload.date.year +
+        '-' +
+        this.addZero(payload.date.month) +
+        '-' +
+        this.addZero(payload.date.day),
+      time: payload.hour + ':' + payload.minute
     };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, body, { headers }).pipe(
