@@ -45,7 +45,7 @@ export class ReservationCreateComponent implements OnInit {
 
   ngOnInit() {
     this.tables$ = this.tableService.getTables();
-    for (let i = 0; i < 24; i++) {
+    for (let i = 14; i < 24; i++) {
       this.hours.push(this.addZero(i));
     }
     this.reservationService.getOpeningHours('1').subscribe((week: Week) => {
