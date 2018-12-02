@@ -28,9 +28,9 @@ export class ReservationCreateComponent implements OnInit {
   minutes: string[] = ['00', '15', '30', '45'];
 
   reservation: CreateReservation = {
-    tableID: undefined, firstName: '', lastName: '', telephoneNumber: '',
-    email: '', numberOfPersons: undefined, date: undefined,
-    rest_id: 1, hour: '', minute: '',
+    tableID: undefined, firstName: undefined, lastName: undefined, telephoneNumber: undefined,
+    email: undefined, numberOfPersons: undefined, date: undefined,
+    rest_id: 1, hour: undefined, minute: undefined,
   };
 
   isDisabled;
@@ -146,5 +146,16 @@ export class ReservationCreateComponent implements OnInit {
     date.setMonth(day.month - 1);
     date.setFullYear(day.year);
     return date;
+  }
+  checkReservation(): boolean {
+    let isDisabled = true;
+    if (this.reservation.date && this.reservation.email && this.reservation.email.length !== 0 &&
+      this.reservation.firstName && this.reservation.firstName.length !== 0 && this.reservation.hour &&
+      this.reservation.lastName && this.reservation.lastName.length !== 0 && this.reservation.minute &&
+      this.reservation.numberOfPersons && this.reservation.rest_id && this.reservation.tableID &&
+      this.reservation.telephoneNumber) {
+        isDisabled = false;
+    }
+    return isDisabled;
   }
 }
