@@ -11,43 +11,51 @@
             <app-tables [tableData]="tables?.table" (tableClicked)="onTableClicked($event)" [isClickable]="true"></app-tables>
         </div>
         
-        <div class="col-md-4 ml-2 mr-2" *ngIf="!isDateAndTimeSet">
+        <div class="col-md-4 ml-2 mr-2" *ngIf="!isDateAndTimeSet">                
             <h4> Wählen Sie zunächst Datum und Uhrzeit der Reservierung aus.</h4>
             <div class="row mt-3 col-md-9">
-                <input type="date" class="form-control ml- form-control col-md-9" id="date" required="true" [(ngModel)] = "reservation.date" #date="ngModel">
-                <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger col-md-9">
-                        Bitte geben Sie ein gültiges Datum ein!
+                <div class="input-group">
+                    <input class="form-control" placeholder="dd-mm-yyyy"
+                            name="dp" [(ngModel)]="reservation.date" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" [maxDate]="maxDate" [markDisabled]="isDisabled">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                    </div>
                 </div>
             </div>
             <div class="form-group row mt-3 col-md-9">
-                <select class="form-control col-md-2 selectpicker" data-live-search="true" id="hour" [(ngModel)] = "reservation.hour">
+                <select class="form-control col-md-3 selectpicker" data-live-search="true" id="hour" [(ngModel)] = "reservation.hour">
                     <option *ngFor='let hour of hours' [value]="hour">
                         {{hour}}
                     </option>
                 </select>
                 <span class="ml-2 mr-2">{{':'}}</span>
-                <select class="form-control col-md-2 selectpicker" data-live-search="true" id="minute" [(ngModel)] = "reservation.minute">
+                <select class="form-control col-md-3 selectpicker" data-live-search="true" id="minute" [(ngModel)] = "reservation.minute">
                     <option *ngFor='let minute of minutes' [value]="minute">
                         {{minute}}
                     </option>
                 </select>
                 <label for="sel1" class="ml-2">Uhrzeit</label>
             </div>
-            <button class="btn btn-primary btn-block container-fluid" (click)="setDateAndTime()">
+            <button class="btn btn-primary btn-block container-fluid" (click)="setDateAndTime()" [disabled]="disableTimeButton()">
                 Bestätigen
             </button>
         </div>
         <div class="col-md-4" *ngIf="isDateAndTimeSet">
             <h4> Wählen Sie nun auf der linken Seite einen Tisch aus und tragen Sie weiter Daten ein.</h4>
             <div class = "row mt-4 mb-4" *ngIf="!isDateOnEdit">
-                <h5 class="col-md-8">Reservierung für den {{reservation?.date}} um {{reservation?.hour}}:{{reservation?.minute}}</h5>
+                <h5 class="col-md-8">Reservierung für den {{addZero(reservation?.date.day)}}-{{addZero(reservation?.date.month)}}-{{reservation?.date.year}} um {{reservation?.hour}}:{{reservation?.minute}}</h5>
                 <button class="btn btn-outline-primary col-md-2" (click)="onDateEditClick()">Ändern</button>
             </div>
             <div class="row mt-4 mb-4" *ngIf="isDateOnEdit">
                 <div class="col-md-9">
                     <div class="form-group row">
-                        <input type="date" class="col-md-6 form-control ml-" id="editDate" [(ngModel)] = "reservationTime.date">
-                        <label for="sel1" class="ml-2">Datum</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="dd-mm-yyyy"
+                                    name="dp" [(ngModel)]="reservationTime.date" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" [maxDate]="maxDate" [markDisabled]="isDisabled">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6 row ml-">
@@ -70,32 +78,32 @@
                     <button class="btn btn-outline-primary" (click)="backButtonClicked()">
                         Zurück
                     </button>
-                    <button class="btn btn-outline-primary mt-3" (click)="setNewDateAndTime()">
+                    <button class="btn btn-outline-primary mt-3" (click)="setNewDateAndTime()" [disabled]="disableEditTimeButton()">
                         Bestätigen
                     </button>
                 </div>
             </div>
             <div class="form-group row justify-content-between">
-                <input type="text" class="col-md-6  form-control" id="firstname" placeholder="Vorname" [(ngModel)] = "reservation.firstName" required="true" #firstname="ngModel">
-                <input type="text" class="col-md-6  form-control" id="lastname" placeholder="Nachname" [(ngModel)] = "reservation.lastName" required="true" #lastname="ngModel">
+                <input type="text" class="col-md-6  form-control" id="firstname" placeholder="Vorname" [(ngModel)] = "reservation.firstName" required="true" #firstname="ngModel" [disabled]="disableInputField()">
+                <input type="text" class="col-md-6  form-control" id="lastname" placeholder="Nachname" [(ngModel)] = "reservation.lastName" required="true" #lastname="ngModel" [disabled]="disableInputField()">
                 <div *ngIf="(firstname.invalid && (firstname.dirty || firstname.touched)) || (lastname.invalid && (lastname.dirty || lastname.touched))" class="alert alert-danger col-md-12">
                         Bitte geben Sie einen gültigen Vornamen oder Nachnamen ein!
                 </div>
             </div>
             <div class="form-group row">
-                <input type="text" class="col-md-12 form-control ml-" id="telephone" placeholder="Telefonnummer" [(ngModel)] = "reservation.telephoneNumber" required="true" #telephone="ngModel">
+                <input type="text" class="col-md-12 form-control ml-" id="telephone" placeholder="Telefonnummer" [(ngModel)] = "reservation.telephoneNumber" required="true" #telephone="ngModel" [disabled]="disableInputField()">
                 <div *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)" class="alert alert-danger col-md-12">
                         Bitte geben Sie eine gültige Telefonnummer ein!
                 </div>
             </div>
             <div class="form-group row">
-                <input type="email" class="col-md-12 form-control ml-" id="email" placeholder="E-Mail" [(ngModel)] = "reservation.email" required="true" #email="ngModel">
+                <input type="email" class="col-md-12 form-control ml-" id="email" placeholder="E-Mail" [(ngModel)] = "reservation.email" required="true" #email="ngModel" [disabled]="disableInputField()">
                 <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger col-md-12">
                         Bitte geben Sie eine gültige Email ein!
                 </div>
             </div>
             <div class="form-group row">
-                <select class="form-control col-md-2" id="sel1" [(ngModel)] = "reservation.numberOfPersons">
+                <select class="form-control col-md-2" id="sel1" [(ngModel)] = "reservation.numberOfPersons" [disabled]="disableInputField()">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -104,7 +112,7 @@
                 <label for="sel1" class="ml-2">Personen</label>
             </div>
             <div class="row">
-                <button class="btn btn-primary btn-block" (click)="createReservation()">
+                <button class="btn btn-primary btn-block" (click)="createReservation()" [disabled]="disableReservationButton()">
                     Reservieren
                 </button>
             </div>

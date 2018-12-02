@@ -6,7 +6,7 @@ import { CreateReservation } from '../data-models/Reservation';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { baseURL } from '../Config.js';
 import { WeekDay } from '@angular/common';
-import { Weekday } from '../data-models/Restaurant';
+import { Week } from '../data-models/Restaurant';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ import { Weekday } from '../data-models/Restaurant';
 export class ReservationService {
   constructor(private http: HttpClient) {}
 
-  getOpeningHours(id: String): Observable<Weekday[]> {
+  getOpeningHours(id: String): Observable<Week> {
     const url = baseURL + '/opening_hours.php?res_id=' + id;
     return this.http.get<any>(url).pipe(
       map(response => response.weekdays),
@@ -42,7 +42,9 @@ export class ReservationService {
     const body = {
       rest_id: payload.rest_id, tableID: payload.tableID, firstName: payload.firstName,
       lastName: payload.lastName, telephoneNumber: payload.telephoneNumber, email: payload.email,
-      numberOfPersons: payload.numberOfPersons, date: payload.date, time: payload.hour + ':' + payload.minute,
+      numberOfPersons: payload.numberOfPersons,
+      date: payload.date.year + '-' + this.addZero(payload.date.month) + '-' + this.addZero(payload.date.day),
+      time: payload.hour + ':' + payload.minute,
     };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(url, body, { headers }).pipe(
@@ -70,5 +72,12 @@ export class ReservationService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  private addZero(i): string {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
   }
 }

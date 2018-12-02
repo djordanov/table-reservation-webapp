@@ -4,6 +4,8 @@ import { ReservationService } from '../services/reservation.service';
 import { TableService } from '../services/table.service';
 import { CreateReservation, CreateReservationResponse } from '../data-models/Reservation';
 import { Observable, of } from 'rxjs';
+import { NgbDateStruct, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { Week } from '../data-models/Restaurant';
 
 @Component({
   selector: 'app-reservation-create',
@@ -16,19 +18,22 @@ export class ReservationCreateComponent implements OnInit {
   isDateOnEdit = false;
   isReservationRequestSend = false;
 
-  today = new Date();
-  formattedToday = this.today.getDate() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getFullYear();
+  date = new Date();
+  minDate: NgbDateStruct = {year: this.date.getFullYear(), month: this.date.getMonth() + 1, day: this.date.getDate()};
+  maxDate: NgbDateStruct = {year: this.date.getFullYear() + 1, month: this.date.getMonth() + 1, day: this.date.getDate()};
 
-  reservationTime: { date: Date, hour: String; minute: String } = { date: undefined, hour: '', minute: '' };
+  reservationTime: { date: NgbDate, hour: String; minute: String } = { date: undefined, hour: '', minute: '' };
 
   hours: string[] = [];
   minutes: string[] = ['00', '15', '30', '45'];
 
   reservation: CreateReservation = {
-    tableID: undefined, firstName: '', lastName: '', telephoneNumber: '',
-    email: '', numberOfPersons: undefined, date: undefined,
-    rest_id: 1, hour: '', minute: '',
+    tableID: undefined, firstName: undefined, lastName: undefined, telephoneNumber: undefined,
+    email: undefined, numberOfPersons: undefined, date: undefined,
+    rest_id: 1, hour: undefined, minute: undefined,
   };
+
+  isDisabled;
 
   response$: Observable<CreateReservationResponse>;
 
@@ -40,10 +45,43 @@ export class ReservationCreateComponent implements OnInit {
 
   ngOnInit() {
     this.tables$ = this.tableService.getTables();
-    for (let i = 0; i < 24; i++) {
+    for (let i = 14; i < 24; i++) {
       this.hours.push(this.addZero(i));
     }
-    this.reservationService.getOpeningHours('1').subscribe(res => console.log(res));
+    this.reservationService.getOpeningHours('1').subscribe((week: Week) => {
+      const closedDays = this.getClosedDays(week);
+
+      this.isDisabled = (date: NgbDate, current: {month: number}) => {
+        const day = this.getDate(date);
+        let isClosed = false;
+        closedDays.map(closedDay => {
+          if (day.getDay() === closedDay && !isClosed) {
+            isClosed = true;
+          }
+        });
+        return isClosed;
+      };
+    });
+  }
+
+  getClosedDays(week: Week): number[] {
+    const closedDays: number[] = [];
+    if (week.monday.ruhetag) {
+      closedDays.push(1);
+    } else if (week.tuesday.ruhetag) {
+      closedDays.push(2);
+    } else if (week.wednesday.ruhetag) {
+      closedDays.push(3);
+    } else if (week.thursday.ruhetag) {
+      closedDays.push(4);
+    } else if (week.friday.ruhetag) {
+      closedDays.push(5);
+    } else if (week.saturday.ruhetag) {
+      closedDays.push(6);
+    } else if (week.sunday.ruhetag) {
+      closedDays.push(0);
+    }
+    return closedDays;
   }
 
   addZero(i): string {
@@ -67,17 +105,15 @@ export class ReservationCreateComponent implements OnInit {
   }
 
   setDateAndTime() {
-    if (this.reservation.hour && this.reservation.minute && this.reservation.date) {
-      this.isDateAndTimeSet = true;
-      this.reservationTime.date = this.reservation.date;
-      this.reservationTime.hour = this.reservation.hour;
-      this.reservationTime.minute = this.reservation.minute;
-      this.tables$ = this.tableService.getTablesByDateAndTime({
-        rest_id: 1,
-        date: this.reservation.date,
-        time: this.reservation.hour + ':' + this.reservation.minute,
-      });
-    }
+    this.isDateAndTimeSet = true;
+    this.reservationTime.date = this.reservation.date;
+    this.reservationTime.hour = this.reservation.hour;
+    this.reservationTime.minute = this.reservation.minute;
+    this.tables$ = this.tableService.getTablesByDateAndTime({
+      rest_id: 1,
+      date: this.reservation.date.year + '-' + this.addZero(this.reservation.date.month) + '-' + this.addZero(this.reservation.date.day),
+      time: this.reservation.hour + ':' + this.reservation.minute,
+    });
   }
 
   onDateEditClick() {
@@ -89,16 +125,58 @@ export class ReservationCreateComponent implements OnInit {
   }
 
   setNewDateAndTime() {
-    if (this.reservationTime.hour && this.reservation.minute && this.reservationTime.date) {
-      this.reservation.date = this.reservationTime.date;
-      this.reservation.hour = this.reservationTime.hour;
-      this.reservation.minute = this.reservationTime.minute;
-      this.isDateOnEdit = false;
-      this.tables$ = this.tableService.getTablesByDateAndTime({
-        rest_id: 1,
-        date: this.reservation.date,
-        time: this.reservation.hour + ':' + this.reservation.minute,
-      });
+    this.reservation.date = this.reservationTime.date;
+    this.reservation.hour = this.reservationTime.hour;
+    this.reservation.minute = this.reservationTime.minute;
+    this.isDateOnEdit = false;
+    this.tables$ = this.tableService.getTablesByDateAndTime({
+      rest_id: 1,
+      date: this.reservation.date.year + '-' + this.addZero(this.reservation.date.month) + '-' + this.addZero(this.reservation.date.day),
+      time: this.reservation.hour + ':' + this.reservation.minute,
+    });
+  }
+
+  getDate(day: NgbDate): Date {
+    const date = new Date();
+    date.setDate(day.day);
+    date.setMonth(day.month - 1);
+    date.setFullYear(day.year);
+    return date;
+  }
+
+  disableTimeButton(): boolean {
+    let isDisabled = true;
+    if (this.reservation.hour && this.reservation.minute && this.reservation.date) {
+        isDisabled = false;
     }
+    return isDisabled;
+  }
+
+  disableEditTimeButton(): boolean {
+    let isDisabled = true;
+    if (this.reservationTime.hour && this.reservationTime.minute && this.reservationTime.date) {
+        isDisabled = false;
+    }
+    return isDisabled;
+  }
+
+  disableReservationButton(): boolean {
+    let isDisabled = true;
+    if (this.reservation.date && this.reservation.email && this.reservation.email.length !== 0 &&
+      this.reservation.firstName && this.reservation.firstName.length !== 0 && this.reservation.hour &&
+      this.reservation.lastName && this.reservation.lastName.length !== 0 && this.reservation.minute &&
+      this.reservation.numberOfPersons && this.reservation.rest_id && this.reservation.tableID &&
+      this.reservation.telephoneNumber) {
+        isDisabled = false;
+    }
+    return isDisabled;
+  }
+
+  disableInputField(): boolean {
+    let isDisabled = false;
+    if (this.isDateOnEdit) {
+        isDisabled = true;
+    }
+    return isDisabled;
   }
 }

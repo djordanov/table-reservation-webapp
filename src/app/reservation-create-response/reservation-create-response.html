@@ -11,15 +11,13 @@
         <img src="../../assets/images/create-reservation-success.jpg" class="rounded mx-auto d-block col-md-12 mt-2" alt="Success_Image">
     </div>
 </div>
-<div *ngIf="response?.result === 'error'">
-        <div class="col-md-7 ml-2">
-                <h1>Reservierung ist fehlgeschlagen!</h1>
-                <span>Sehr geehrte/ geehrter {{reservation?.firstName}} {{reservation?.lastName}}</span><br><br>
-                <span>Ihre Reservierung wurde nicht angelegt!</span><br>
-                <span>Es lag folgender Fehler vor: <strong>{{response?.text}}</strong></span><br>
-                <button class="btn btn-primary btn-block mt-2" (click)="onBackClick()">Zurück zur Hauptseite</button>
-            </div>
-            <div class="col-md-4 ml-2 mr-2">
-                <img src="../../assets/images/create-reservation-error.jpg" class="rounded mx-auto d-block col-md-12 mt-2" alt="Success_Image">
-            </div>
+<div *ngIf="response?.result === 'error'" class="row mt-2">
+        <div class="col-md-5 ml-2">
+            <h1>Reservierung ist fehlgeschlagen!</h1>
+            <span>Es lag folgender Fehler vor: <strong>{{response?.text}}</strong></span><br>
+            <button class="btn btn-primary btn-block mt-2" (click)="onBackClick()">Zurück zur Hauptseite</button>
+        </div>
+        <div class="col-md-6 ml-2 mr-2">
+            <img src="../../assets/images/create-reservation-error.jpg" class="rounded mx-auto d-block col-md-12 mt-2" alt="Success_Image">
+        </div>
 </div>

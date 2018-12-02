@@ -1,5 +1,6 @@
 import { Table } from './Table';
 import { Person } from './Person';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 export class Reservation {
   reservation_id: String;
@@ -21,7 +22,7 @@ export class CreateReservation {
   telephoneNumber: String;
   email: String;
   numberOfPersons: number;
-  date: Date;
+  date: NgbDate;
   hour?: String;
   minute?: String;
 }
@@ -35,6 +36,6 @@ export class CreateReservationResponse {
 
 export class TableReservedRequestPayload {
   rest_id: number;
-  date: Date;
+  date: String;
   time: String;
 }
