@@ -171,4 +171,12 @@ export class ReservationCreateComponent implements OnInit {
     }
     return isDisabled;
   }
+
+  disableInputField(): boolean {
+    let isDisabled = false;
+    if (this.isDateOnEdit) {
+        isDisabled = true;
+    }
+    return isDisabled;
+  }
 }
