@@ -11,7 +11,7 @@
     </div>
     <div class="col-md-6 p-5">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <input class="col-md-6" type="text" formControlName="reservationNumber" required>
+        <input class="col-md-10" type="text" formControlName="reservationNumber" required>
         <button class="btn btn-primary btn-block btn-mg col-md-2 float-right" type="submit"
           [disabled]="!form.valid">
           Ok
