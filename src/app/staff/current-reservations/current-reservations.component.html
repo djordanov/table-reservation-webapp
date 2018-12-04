@@ -64,7 +64,10 @@
       <td>
         <button class="btn btn-info" (click)="deleteRes(reservation)">Stornieren</button>
       </td>
-      <td>TODO</td>
+      <td *ngIf="reservation.angekommen==='1'">Ja</td>
+      <td *ngIf="reservation.angekommen==='0'">
+        <a (click)="confirmArrival(reservation)">Ankunft bestätigen</a>
+      </td>
     </tr>
   </table>
 </div>

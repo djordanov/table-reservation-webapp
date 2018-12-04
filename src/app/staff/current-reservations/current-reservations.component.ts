@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Reservation } from 'src/app/data-models/Reservation';
 import { TableService } from 'src/app/services/table.service';
+import { ReservationService } from 'src/app/services/reservation.service';
 import { CancelModalComponent } from '../../cancel-modal/cancel-modal.component';
 import { parseTablesResponse } from '../../Utils';
 
@@ -26,6 +27,7 @@ export class StaffCurrentReservationsComponent implements OnInit {
 
   constructor(
     private tableService: TableService,
+    private reservationService: ReservationService,
     private fb: FormBuilder,
     private modalService: NgbModal
   ) {}
@@ -42,6 +44,16 @@ export class StaffCurrentReservationsComponent implements OnInit {
   deleteRes(reservation) {
     const modalRef = this.modalService.open(CancelModalComponent);
     modalRef.componentInstance.reservation = reservation;
+  }
+
+  confirmArrival(reservation) {
+    this.reservationService.confirmArrival(reservation.res_pid).subscribe(resp => {
+      if (resp.result === 'successful') {
+        reservation.angekommen = '1';
+      } else {
+        alert(JSON.stringify(resp));
+      }
+    });
   }
 
   jumpCurrent() {
