@@ -18,4 +18,11 @@ export class ReservationCreateResponseComponent {
   onBackClick() {
     this.router.navigateByUrl('reservation');
   }
+
+  addZero(i): string {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
+  }
 }
