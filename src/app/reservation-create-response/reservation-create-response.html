@@ -1,10 +1,12 @@
 <div *ngIf="response?.result === 'successful'" class="row mt-2">
     <div class="col-md-7 ml-2">
-        <h1>Reservierung erfolgreich angelegt!</h1>
+        <h3>Reservierung {{response?.res_pid}} bitte bestätigen!</h3>
         <span>Sehr geehrte/ geehrter {{reservation?.firstName}} {{reservation?.lastName}}</span><br><br>
-        <span>Ihre Reservierung mit der Nummer </span><strong>{{response?.res_pid}}</strong><span> wurde an uns erfolgreich übermittelt.</span><br>
-        <span>Wir haben eine E-Mail an Ihre Adresse </span><strong>{{reservation?.email}}</strong><span> mit allen Reservierungsdetails geschickt.</span><br>
-        <span>Um Ihre Reservierung nun zu bestätigen, müssen Sie innerhalb einer Stunde nur auf den Bestätigungslink in der E-Mail klicken.</span><br>
+        <span>Sie haben am <strong>{{addZero(reservation?.date.day)}}-{{addZero(reservation?.date.month)}}-{{reservation?.date.year}}</strong> um <strong>{{reservation?.hour}}</strong> Uhr einen Tisch für <strong>{{reservation?.numberOfPersons}}</strong> Personen in unserem Restaurant reserviert.</span><br>
+        <span>Bitte bestätigen Sie Ihre Reservierung innerhalb der nächsten Stunde, um diese erfolgreich abzuschließen.</span><br>
+        <span>Sie müssen einfach auf den Link in der Bestätigungsmail ihrer Reservierung klicken.</span><br><br>
+        <span>Mit freundlichen Grüßen</span><br>
+        <span>Max Mustermann</span>
         <button class="btn btn-primary btn-block mt-2" (click)="onBackClick()">Zurück zur Hauptseite</button>
     </div>
     <div class="col-md-4 ml-2 mr-2">
