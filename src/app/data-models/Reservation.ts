@@ -12,6 +12,7 @@ export class Reservation {
   res_time: Date;
   timeduration: number;
   number_of_person: number;
+  angekommen?: number;
 }
 
 export class CreateReservation {

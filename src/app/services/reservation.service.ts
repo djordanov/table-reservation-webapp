@@ -35,6 +35,13 @@ export class ReservationService {
       .pipe(catchError(this.handleError<any>(`delete id=${id}`, null)));
   }
 
+  confirmArrival(res_pid: String): Observable<any> {
+    const url = baseURL + '/angekommen.php?nr=' + res_pid;
+    return this.http
+      .get<any>(url)
+      .pipe(catchError(this.handleError<any>(`confirm id=${res_pid}`, null)));
+  }
+
   createReservation(payload: CreateReservation): Observable<any> {
     const url = baseURL + '/reservierung_anlegen.php';
     const body = {
