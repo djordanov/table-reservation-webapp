@@ -30,6 +30,14 @@ const parseReservationResponse = (reservationResponse: any): Reservation => {
   return reservation;
 };
 
+const parseTableResponse = (tableResponse: any): Table => {
+  const table: Table = new Table(tableResponse.table_id);
+  for (const key of Object.keys(tableResponse)) {
+    table[key] = tableResponse[key];
+  }
+  return table;
+};
+
 const parseTablesResponse = (tablesResponse: any): Table[] => {
   if (tablesResponse.result === 'error') {
     throw new Error(tablesResponse.text);
@@ -38,14 +46,6 @@ const parseTablesResponse = (tablesResponse: any): Table[] => {
   return tablesResponse.table.map(tableResponse => {
     return parseTableResponse(tableResponse);
   });
-};
-
-const parseTableResponse = (tableResponse: any): Table => {
-  const table: Table = new Table(tableResponse.table_id);
-  for (const key of Object.keys(tableResponse)) {
-    table[key] = tableResponse[key];
-  }
-  return table;
 };
 
 export { parseReservationResponse, parseTablesResponse };
