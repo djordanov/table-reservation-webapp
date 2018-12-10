@@ -3,18 +3,21 @@
 
   <!-- Search field -->
   <div class="col-md-5">
-    <form [formGroup]="formQuery" (ngSubmit)="filterReservations()">
+    <form [formGroup]="formQuery" (ngSubmit)="onQuerySubmit()">
       <input class="form-control" type="text" formControlName="query" placeholder="Suche">
     </form>
   </div>
 
   <!-- Date Time Picker -->
   <div class="col-md-5">
-    <form class="form-inline" [formGroup]="formDate" (ngSubmit)="onSubmit()">
+    <form class="form-inline" [formGroup]="formDate" (ngSubmit)="onDateTimeSubmit()">
       <div class="form-group">
         <input type="date" class="m-1" formControlName="date" required>
         <input type="time" class="m-1" formControlName="time" required>
       </div>
+      <button class="btn btn-info" (click)="onDateTimeSubmit()">
+        Suchen
+      </button>
     </form>
   </div>
 

@@ -36,9 +36,12 @@ export class StaffCurrentReservationsComponent implements OnInit {
     this.fetchReservations();
   }
 
-  onSubmit() {
+  onQuerySubmit() {
+    this.filterReservations();
+  }
+
+  onDateTimeSubmit() {
     this.fetchReservations();
-    this.formQuery.get('query').setValue('');
   }
 
   deleteRes(reservation) {
@@ -47,13 +50,15 @@ export class StaffCurrentReservationsComponent implements OnInit {
   }
 
   confirmArrival(reservation) {
-    this.reservationService.confirmArrival(reservation.res_pid).subscribe(resp => {
-      if (resp.result === 'successful') {
-        reservation.angekommen = '1';
-      } else {
-        alert(JSON.stringify(resp));
-      }
-    });
+    this.reservationService
+      .confirmArrival(reservation.res_pid)
+      .subscribe(resp => {
+        if (resp.result === 'successful') {
+          reservation.angekommen = '1';
+        } else {
+          alert(JSON.stringify(resp));
+        }
+      });
   }
 
   jumpCurrent() {
@@ -63,13 +68,16 @@ export class StaffCurrentReservationsComponent implements OnInit {
     this.formDate
       .get('time')
       .setValue(formatDate(new Date(), 'HH:mm', 'en_US'));
-    this.formQuery.get('query').setValue('');
 
     this.fetchReservations();
   }
 
   jumpNextHour() {
-    const nextHour = new Date(new Date().getTime() + 1000 * 60 * 60);
+    // get current date from form into js date model
+    const datestr =
+      this.formDate.get('date').value + 'T' + this.formDate.get('time').value;
+    const currentDate = new Date(datestr);
+    const nextHour = new Date(currentDate.getTime() + 1000 * 60 * 60);
 
     this.formDate
       .get('date')
@@ -102,6 +110,7 @@ export class StaffCurrentReservationsComponent implements OnInit {
       this.baseReservations = reservations;
       this.filtRes = reservations;
     });
+    this.filterReservations();
   }
 
   /**
