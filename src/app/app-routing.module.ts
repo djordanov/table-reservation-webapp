@@ -14,20 +14,16 @@ const routes: Routes = [
   { path: '', redirectTo: 'reservation', pathMatch: 'full' },
   { path: 'reservation', component: ReservationMenuComponent },
   { path: 'reservation/create', component: ReservationCreateComponent },
-  {
-    path: 'reservation/create/success',
-    component: ReservationCreateResponseComponent
-  },
-  {
-    path: 'reservation/create/failed',
-    component: ReservationCreateResponseComponent
-  },
   { path: 'reservation/details', component: ReservationDetailsComponent },
   { path: 'reservation/delete', component: ReservationDeleteComponent },
   { path: 'staff/menu', component: StaffMenuComponent },
   {
     path: 'staff/current-reservations',
     component: StaffCurrentReservationsComponent
+  },
+  {
+    path: 'staff/reservations',
+    component: ReservationCreateComponent,
   },
   {
     path: 'staff/booking-plan',

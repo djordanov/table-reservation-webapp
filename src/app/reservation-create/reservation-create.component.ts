@@ -24,7 +24,7 @@ export class ReservationCreateComponent implements OnInit {
 
   reservationTime: { date: NgbDate, hour: String; minute: String } = { date: undefined, hour: '', minute: '' };
 
-  hours: string[] = [];
+  hours: number[] = [];
   minutes: string[] = ['00', '15', '30', '45'];
 
   reservation: CreateReservation = {
@@ -46,7 +46,7 @@ export class ReservationCreateComponent implements OnInit {
   ngOnInit() {
     this.tables$ = this.tableService.getTables();
     for (let i = 14; i < 24; i++) {
-      this.hours.push(this.addZero(i));
+      this.hours.push(i);
     }
     this.reservationService.getOpeningHours('1').subscribe((week: Week) => {
       const closedDays = this.getClosedDays(week);
