@@ -155,7 +155,10 @@ export class StaffCurrentReservationsComponent implements OnInit {
     if (this.filtRes && this.filtRes.length > 0) {
       return;
     }
-    // date is redundant, since we only ever show today
+    // date
+    this.filtRes = this.baseReservations.filter(res =>
+      res.res_day.toString().includes(q)
+    );
     // time
     this.filtRes = this.baseReservations.filter(res =>
       res.res_time.toString().includes(q)
