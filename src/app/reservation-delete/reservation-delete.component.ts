@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-
 import { ReservationService } from '../services/reservation.service';
 
 import { parseReservationResponse } from '../Utils';

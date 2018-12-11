@@ -12,7 +12,6 @@ import { Reservation } from '../data-models/Reservation';
 })
 export class CancelModalComponent implements OnInit {
   @Input() reservation: Reservation;
-  @Input() name: String;
   constructor(
     private reservationService: ReservationService,
     public activeModal: NgbActiveModal,
